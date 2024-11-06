@@ -1,1 +1,7 @@
 rootProject.name = 'poppingcore'
+include 'boot:batch'
+findProject(':boot:batch')?.name = 'batch'
+include 'boot:external-api'
+findProject(':boot:external-api')?.name = 'external-api'
+include 'data'
+

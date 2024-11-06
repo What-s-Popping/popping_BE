@@ -1,0 +1,7 @@
+spring:
+  jackson:
+    time-zone: Asia/Seoul
+
+jwt:
+  issuer: popping@gmail.com
+  key: {KEY}
