@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.popping'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+bootJar { enabled = true }
+jar { enabled = false }
+
+dependencies {
+    implementation project(':data')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
