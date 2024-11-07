@@ -1,6 +1,6 @@
 package com.popping.global.config.jwt;
 
-import com.popping.data.member.role.Role;
+import com.popping.data.member.data.member.entity.role.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
@@ -23,36 +23,36 @@ import java.util.Set;
 public class TokenProvider {
     private final JwtProperties jwtProperties;
 
-    public String createRefreshToken(String memberPk, Role role){
-        return createToken(new Date(new Date().getTime() + Token.REFRESH_TOKEN.getExpirationMs()), memberPk, role);
+    public String createRefreshToken(Long memberPk, Role role){
+        return createToken(Token.REFRESH_TOKEN, memberPk, role);
     }
 
-    public String createAccessToken(String memberPk, Role role){
-        return createToken(new Date(new Date().getTime() + Token.ACCESS_TOKEN.getExpirationMs()), memberPk, role);
+    public String createAccessToken(Long memberPk, Role role){
+        return createToken(Token.ACCESS_TOKEN, memberPk, role);
     }
 
-    private String createToken(Date expiry, String memberPk, Role role){
+    private String createToken(Token token, Long memberPk, Role role){
         Date now = new Date();
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setIssuer(jwtProperties.getIssuer())
                 .setIssuedAt(now)
-                .setExpiration(expiry)
-                .setSubject("popping")
+                .setExpiration(new Date(new Date().getTime() + token.getExpirationMs()))
+                .setSubject(token.getName())
                 .claim("id", memberPk)
                 .claim("role", role.toString())
                 .signWith(Keys.hmacShaKeyFor(jwtProperties.getKey().getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public boolean validToken(String jwtToken){
+    public boolean isValidToken(String jwtToken){
         try {
             Jwts.parserBuilder()
                     .setSigningKey(Keys.hmacShaKeyFor(jwtProperties.getKey().getBytes(StandardCharsets.UTF_8)))
                     .build()
                     .parseClaimsJws(jwtToken);
             return true;
-        }catch (JwtException | IllegalArgumentException e){
+        } catch (JwtException | IllegalArgumentException e){
             return false;
         }
     }
@@ -94,13 +94,11 @@ public class TokenProvider {
 
     public String getMemberPk(String jwtToken){
         Claims claims = getClaim(jwtToken);
-
         return String.valueOf(claims.get("id"));
     }
 
     public String getRole(String jwtToken){
         Claims claims = getClaim(jwtToken);
-
         return String.valueOf(claims.get("role"));
     }
 
@@ -109,15 +107,26 @@ public class TokenProvider {
         return claim.getExpiration();
     }
 
+    public String getSubject(String jwtToken){
+        Claims claim = getClaim(jwtToken);
+        return claim.getSubject();
+    }
+
+    public boolean isRefreshToken(String jwtToken){
+        return getSubject(jwtToken).equals(Token.REFRESH_TOKEN.getName());
+    }
+
     @Getter
     private enum Token {
-        ACCESS_TOKEN(Period.ofMonths(6).toTotalMonths() * Duration.ofDays(30L).toMillis()),
-        REFRESH_TOKEN(Duration.ofDays(1).toMillis());
+        REFRESH_TOKEN(Period.ofMonths(6).toTotalMonths() * Duration.ofDays(30L).toMillis(), "RefreshToken"),
+        ACCESS_TOKEN(Duration.ofDays(1).toMillis(), "AccessToken");
 
         private final long expirationMs;
+        private final String name;
 
-        Token(long expirationMs) {
+        Token(long expirationMs, String name) {
             this.expirationMs = expirationMs;
+            this.name = name;
         }
     }
 }
