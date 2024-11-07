@@ -1,0 +1,10 @@
+cloud:
+  aws:
+    region: ap-northeast-2
+    stack:
+      auto: false
+    s3:
+      bucket: popping-s3
+      credentials:
+        accessKey: ${accessKey}
+        secretKey: ${secretKey}

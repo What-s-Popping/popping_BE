@@ -1,4 +1,9 @@
 spring:
+  config:
+    import:
+      - classpath:/application-data.yml
+      - classpath:/application-cloud.yml
+
   jackson:
     time-zone: Asia/Seoul
 

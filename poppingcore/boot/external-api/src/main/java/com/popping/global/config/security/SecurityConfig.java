@@ -27,6 +27,12 @@ public class SecurityConfig {
         httpSecurity
                 .authorizeHttpRequests(httpRequest -> httpRequest
                         .requestMatchers(HttpMethod.GET, "/health-check").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/sign-up").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/sign-in").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/sign-in/re/status").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/tokens").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/sms/send").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/sms/verify").permitAll()
                         .anyRequest().authenticated());
 
         httpSecurity
