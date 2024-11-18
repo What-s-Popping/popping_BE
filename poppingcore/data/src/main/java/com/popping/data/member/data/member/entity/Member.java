@@ -1,9 +1,10 @@
 package com.popping.data.member.data.member.entity;
 
+import com.popping.data.friendgroup.entity.FriendGroup;
 import com.popping.data.member.data.member.entity.ostype.OsType;
 import com.popping.data.member.data.member.entity.role.Role;
 import com.popping.data.member.data.member.entity.signupplatform.SignUpPlatform;
-import io.hypersistence.utils.hibernate.id.Tsid;
+import com.popping.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -14,9 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
-    @Id @Tsid
-    private Long pk;
+public class Member extends BaseEntity {
 
     @NotNull
     @Column(name = "NAME")
@@ -46,8 +45,15 @@ public class Member {
     @Enumerated(value = EnumType.STRING)
     private OsType osType;
 
+    @Column
+    private int popCorn;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "allFriendGroup",foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private FriendGroup allFriendGroup;
+
     @Builder
-    public Member(String birthDate, String email, String firebaseToken, boolean isAllowNotify, String name, String phoneNumber, String profileImgName, String refreshToken, SignUpPlatform signUpPlatform, OsType osType) {
+    public Member(String birthDate, String email, String firebaseToken, boolean isAllowNotify, String name, String phoneNumber, String profileImgName, String refreshToken, SignUpPlatform signUpPlatform, OsType osType, FriendGroup allFriendGroup) {
         this.birthDate = birthDate;
         this.email = email;
         this.firebaseToken = firebaseToken;
@@ -59,6 +65,7 @@ public class Member {
         this.role = Role.USER;
         this.signUpPlatform = signUpPlatform;
         this.osType = osType;
+        this.allFriendGroup = allFriendGroup;
     }
 
     public void updateProfileImg(String profileImgName) {

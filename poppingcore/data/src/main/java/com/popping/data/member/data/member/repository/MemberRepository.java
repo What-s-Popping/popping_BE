@@ -15,4 +15,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByRefreshToken(@Param("refreshToken") String refreshToken);
     @Query("select m from Member m where m.phoneNumber = :phoneNumber")
     Optional<Member> findByPhoneNumber(@Param("phoneNumber") String phoneNum);
+    @Query("select m.popCorn from Member m where m.pk = :memberPk")
+    Optional<Integer> findPopcorn(@Param("memberPk") Long memberPk);
 }
