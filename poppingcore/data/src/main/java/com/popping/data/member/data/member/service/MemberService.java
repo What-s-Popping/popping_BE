@@ -7,6 +7,7 @@ import com.popping.global.exceptionmessage.ExceptionMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -23,6 +24,14 @@ public class MemberService {
         return memberRepository.findMember(email, signUpPlatform);
     }
 
+    public Optional<Member> findMember(Long memberPk) {
+        return memberRepository.findById(memberPk);
+    }
+
+    public List<Member> findMembers(List<Long> memberPks) {
+        return memberRepository.findAllById(memberPks);
+    }
+
     public Member findMemberByToken(String refreshToken) {
         return memberRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(() -> new NoSuchElementException(ExceptionMessage.MEMBER_NOT_FOUND.getMessage()));
@@ -30,5 +39,9 @@ public class MemberService {
 
     public Optional<Member> findMemberByPhoneNum(String phoneNum) {
         return memberRepository.findByPhoneNumber(phoneNum);
+    }
+
+    public int findPopcornBalance(Long memberPk) {
+        return memberRepository.findPopcorn(memberPk).orElseThrow(NoSuchElementException::new);
     }
 }

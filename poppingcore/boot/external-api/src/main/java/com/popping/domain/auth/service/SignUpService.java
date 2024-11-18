@@ -1,5 +1,7 @@
 package com.popping.domain.auth.service;
 
+import com.popping.data.friendgroup.entity.FriendGroup;
+import com.popping.data.friendgroup.service.FriendGroupService;
 import com.popping.data.member.data.member.entity.Member;
 import com.popping.data.member.data.member.entity.signupplatform.SignUpPlatform;
 import com.popping.data.member.data.member.service.MemberService;
@@ -19,6 +21,7 @@ public class SignUpService {
     private final ImgSaveService imgSaveService;
     private final PolicyTermService policyTermService;
     private final TokenService tokenService;
+    private final FriendGroupService friendGroupService;
 
     @Transactional
     public AuthMemberDto.SignUpResponse signUp(AuthMemberDto.SignUpRequest signUpRequestDto, MultipartFile file) {
@@ -27,6 +30,7 @@ public class SignUpService {
         TokenDto.Tokens tokens = tokenService.createTokens(requester.getPk(), requester.getRole());
         requester.updateRefreshToken(tokens.getRefreshToken().getToken());
         policyTermService.savePolicyTerm(signUpRequestDto.of(requester));
+        friendGroupService.saveFriendGroup(FriendGroup.builder().groupOwner(requester).build());
 
         if (isKakaoProfileImgSaveCond(signUpRequestDto.getSignUpPlatform(), file)) {
             imgSaveService.saveProfileImg(requester.getProfileImgName(), signUpRequestDto.getExtension(), file);
