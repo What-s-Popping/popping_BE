@@ -1,4 +1,4 @@
-package com.popping.data.member.data.member.entity.role;
+package com.popping.data.member.entity.role;
 
 import lombok.Getter;
 

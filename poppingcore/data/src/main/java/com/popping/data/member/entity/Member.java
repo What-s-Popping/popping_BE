@@ -1,9 +1,9 @@
-package com.popping.data.member.data.member.entity;
+package com.popping.data.member.entity;
 
 import com.popping.data.friendgroup.entity.FriendGroup;
-import com.popping.data.member.data.member.entity.ostype.OsType;
-import com.popping.data.member.data.member.entity.role.Role;
-import com.popping.data.member.data.member.entity.signupplatform.SignUpPlatform;
+import com.popping.data.member.entity.ostype.OsType;
+import com.popping.data.member.entity.role.Role;
+import com.popping.data.member.entity.signupplatform.SignUpPlatform;
 import com.popping.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

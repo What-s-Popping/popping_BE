@@ -1,6 +1,6 @@
 package com.popping.data.friendgroup.entity;
 
-import com.popping.data.member.data.member.entity.Member;
+import com.popping.data.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.popping.domain.member.service;
 
-import com.popping.data.member.data.member.service.MemberService;
+import com.popping.data.member.service.MemberService;
 import com.popping.domain.member.dto.PopcornDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

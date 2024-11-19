@@ -1,4 +1,4 @@
-package com.popping.data.member.data.member.entity.signupplatform;
+package com.popping.data.member.entity.signupplatform;
 
 import lombok.Getter;
 

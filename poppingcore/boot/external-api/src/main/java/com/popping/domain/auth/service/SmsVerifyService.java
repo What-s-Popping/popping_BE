@@ -1,7 +1,7 @@
 package com.popping.domain.auth.service;
 
-import com.popping.data.member.data.member.entity.Member;
-import com.popping.data.member.data.member.service.MemberService;
+import com.popping.data.member.entity.Member;
+import com.popping.data.member.service.MemberService;
 import com.popping.domain.auth.dto.AuthSmsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

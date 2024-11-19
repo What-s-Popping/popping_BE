@@ -1,7 +1,7 @@
 package com.popping.domain.pop.service;
 
-import com.popping.data.member.data.member.entity.Member;
-import com.popping.data.member.data.member.service.MemberService;
+import com.popping.data.member.entity.Member;
+import com.popping.data.member.service.MemberService;
 import com.popping.data.post.entity.Pop;
 import com.popping.data.post.entity.SharedGroup;
 import com.popping.data.post.entity.SharedGroupMember;

@@ -1,6 +1,6 @@
 package com.popping.global.config.jwt;
 
-import com.popping.data.member.data.member.entity.role.Role;
+import com.popping.data.member.entity.role.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
