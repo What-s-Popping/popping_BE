@@ -1,8 +1,8 @@
-package com.popping.data.member.data.member.service;
+package com.popping.data.member.service;
 
-import com.popping.data.member.data.member.entity.Member;
-import com.popping.data.member.data.member.entity.signupplatform.SignUpPlatform;
-import com.popping.data.member.data.member.repository.MemberRepository;
+import com.popping.data.member.entity.Member;
+import com.popping.data.member.entity.signupplatform.SignUpPlatform;
+import com.popping.data.member.repository.MemberRepository;
 import com.popping.global.exceptionmessage.ExceptionMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

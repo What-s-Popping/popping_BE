@@ -2,10 +2,10 @@ package com.popping.domain.auth.service;
 
 import com.popping.data.friendgroup.entity.FriendGroup;
 import com.popping.data.friendgroup.service.FriendGroupService;
-import com.popping.data.member.data.member.entity.Member;
-import com.popping.data.member.data.member.entity.signupplatform.SignUpPlatform;
-import com.popping.data.member.data.member.service.MemberService;
-import com.popping.data.member.data.member.service.PolicyTermService;
+import com.popping.data.member.entity.Member;
+import com.popping.data.member.entity.signupplatform.SignUpPlatform;
+import com.popping.data.member.service.MemberService;
+import com.popping.data.member.service.PolicyTermService;
 import com.popping.domain.auth.dto.AuthMemberDto;
 import com.popping.domain.auth.dto.TokenDto;
 import com.popping.domain.img.service.ImgSaveService;

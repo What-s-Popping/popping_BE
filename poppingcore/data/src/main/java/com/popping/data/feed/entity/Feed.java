@@ -1,6 +1,6 @@
-package com.popping.data.member.data.feed.entity;
+package com.popping.data.feed.entity;
 
-import com.popping.data.member.data.member.entity.Member;
+import com.popping.data.member.entity.Member;
 import com.popping.data.post.entity.Pop;
 import com.popping.global.entity.BaseEntity;
 import jakarta.persistence.*;

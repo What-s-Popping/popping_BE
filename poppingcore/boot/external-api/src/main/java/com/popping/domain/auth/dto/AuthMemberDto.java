@@ -1,10 +1,10 @@
 package com.popping.domain.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.popping.data.member.data.member.entity.Member;
-import com.popping.data.member.data.member.entity.PolicyTerm;
-import com.popping.data.member.data.member.entity.ostype.OsType;
-import com.popping.data.member.data.member.entity.signupplatform.SignUpPlatform;
+import com.popping.data.member.entity.Member;
+import com.popping.data.member.entity.PolicyTerm;
+import com.popping.data.member.entity.ostype.OsType;
+import com.popping.data.member.entity.signupplatform.SignUpPlatform;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;

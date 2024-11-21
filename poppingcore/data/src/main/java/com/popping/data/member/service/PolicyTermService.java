@@ -1,7 +1,7 @@
-package com.popping.data.member.data.member.service;
+package com.popping.data.member.service;
 
-import com.popping.data.member.data.member.entity.PolicyTerm;
-import com.popping.data.member.data.member.repository.PolicyTermRepository;
+import com.popping.data.member.entity.PolicyTerm;
+import com.popping.data.member.repository.PolicyTermRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

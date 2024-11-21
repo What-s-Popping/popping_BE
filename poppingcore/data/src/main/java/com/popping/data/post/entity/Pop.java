@@ -1,7 +1,7 @@
 package com.popping.data.post.entity;
 
 import com.popping.data.friendgroup.entity.CommonGroup;
-import com.popping.data.member.data.member.entity.Member;
+import com.popping.data.member.entity.Member;
 import com.popping.data.post.chip.ColorChip;
 import com.popping.global.entity.BaseEntity;
 import jakarta.persistence.*;

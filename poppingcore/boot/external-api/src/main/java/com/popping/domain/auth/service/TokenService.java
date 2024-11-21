@@ -1,8 +1,8 @@
 package com.popping.domain.auth.service;
 
-import com.popping.data.member.data.member.entity.Member;
-import com.popping.data.member.data.member.entity.role.Role;
-import com.popping.data.member.data.member.service.MemberService;
+import com.popping.data.member.entity.Member;
+import com.popping.data.member.entity.role.Role;
+import com.popping.data.member.service.MemberService;
 import com.popping.domain.auth.dto.TokenDto;
 import com.popping.global.config.jwt.TokenProvider;
 import com.popping.global.exception.SignInRequiredException;
