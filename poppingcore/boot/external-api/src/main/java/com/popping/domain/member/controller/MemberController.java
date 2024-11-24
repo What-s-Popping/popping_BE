@@ -8,7 +8,6 @@ import com.popping.domain.member.service.PopcornService;
 import com.popping.domain.member.service.PrivateProfileService;
 import com.popping.domain.member.service.ProfileService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@Slf4j
 @RestController
 @RequestMapping("/members")
 @RequiredArgsConstructor
