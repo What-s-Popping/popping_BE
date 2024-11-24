@@ -1,5 +1,6 @@
 package com.popping.domain.img.service;
 
+import com.popping.client.aws.s3.S3ImgPathPrefix;
 import com.popping.client.aws.s3.S3Service;
 import com.popping.data.img.service.ImgService;
 import com.popping.domain.img.dto.PostImgDto;
@@ -40,7 +41,7 @@ public class ImgSaveService {
 
     public PostImgDto.Response generateUploadUrl() {
         String randomImgName = UUID.randomUUID().toString().concat("."+DEFAULT_EXTENSION);
-        String uploadUrl = s3Service.generatePutPresignedUrl(POST_PATH, randomImgName);
+        String uploadUrl = s3Service.generatePutPresignedUrl(S3ImgPathPrefix.POP, randomImgName);
         imgService.saveImgNameWithoutPost(randomImgName);
 
         return PostImgDto.Response.builder()

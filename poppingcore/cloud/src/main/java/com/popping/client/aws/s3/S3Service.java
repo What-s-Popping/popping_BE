@@ -23,7 +23,7 @@ public class S3Service {
     private final S3Client s3Client;
     private final S3Presigner s3Presigner;
 
-    private static final Duration EXPIRY_TIME = Duration.ofMinutes(1L);
+    private static final Duration EXPIRY_TIME = Duration.ofHours(24L);
 
     public void saveImg(String imgPath, String imgOriginalName, byte[] file) {
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
@@ -33,24 +33,24 @@ public class S3Service {
         s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file));
     }
 
-    public String generatePutPresignedUrl(String filePath, String imgName) {
+    public String generatePutPresignedUrl(S3ImgPathPrefix imgPathPrefix, String imgName) {
 
         return s3Presigner.presignPutObject(PutObjectPresignRequest.builder()
                         .putObjectRequest(PutObjectRequest.builder()
                                 .bucket(bucket)
-                                .key(filePath + imgName)
+                                .key(imgPathPrefix.getPathPrefix() + imgName)
                                 .build())
                         .signatureDuration(EXPIRY_TIME)
                         .build())
                 .url().toString();
     }
 
-    public String generateGetPresignedUrl(String imgPathPrefix, String imgName) {
+    public String generateGetPresignedUrl(S3ImgPathPrefix imgPathPrefix, String imgName) {
         return s3Presigner.presignGetObject(
                         GetObjectPresignRequest.builder()
                                 .getObjectRequest(GetObjectRequest.builder()
                                         .bucket(bucket)
-                                        .key(imgPathPrefix + imgName)
+                                        .key(imgPathPrefix.getPathPrefix() + imgName)
                                         .build())
                                 .signatureDuration(EXPIRY_TIME)
                                 .build())
@@ -66,8 +66,6 @@ public class S3Service {
                     .build());
         } catch (Exception e) {
             return false;
-        } finally {
-            s3Client.close();
         }
         return true;
     }

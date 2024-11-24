@@ -26,6 +26,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests(httpRequest -> httpRequest
+                        .requestMatchers("/admin/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/health-check").permitAll()
                         .requestMatchers(HttpMethod.POST, "/sign-up").permitAll()
                         .requestMatchers(HttpMethod.POST, "/sign-in").permitAll()
