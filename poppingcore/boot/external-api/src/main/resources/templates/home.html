@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Info</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .card {
+            margin-top: 20px;
+        }
+        .spinner-border {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center mb-4">User Info Search</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form id="userSearchForm">
+                        <div class="form-group">
+                            <label for="userId">Enter User ID:</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="userId" placeholder="Enter User ID" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="spinner-border text-primary" id="loadingSpinner" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="accordion" class="row justify-content-center d-none">
+        <div class="col-md-8">
+            <!-- User Details Card -->
+            <div class="card">
+                <div class="card-header" id="userDetailsHeading">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#userDetails" aria-expanded="true" aria-controls="userDetails">
+                            User Details
+                        </button>
+                    </h5>
+                </div>
+                <div id="userDetails" class="collapse show" aria-labelledby="userDetailsHeading" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>User ID:</strong> <span id="displayUserId"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment History Card -->
+            <div class="card">
+                <div class="card-header" id="paymentHistoryHeading">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#paymentHistory" aria-expanded="false" aria-controls="paymentHistory">
+                            Payment History
+                        </button>
+                    </h5>
+                </div>
+                <div id="paymentHistory" class="collapse" aria-labelledby="paymentHistoryHeading" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Payment Method</th>
+                            </tr>
+                            </thead>
+                            <tbody id="paymentHistoryBody">
+                            <!-- Dynamic Content -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Popcorn Usage Card -->
+            <div class="card">
+                <div class="card-header" id="popcornUsageHeading">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#popcornUsage" aria-expanded="false" aria-controls="popcornUsage">
+                            Popcorn Usage
+                        </button>
+                    </h5>
+                </div>
+                <div id="popcornUsage" class="collapse" aria-labelledby="popcornUsageHeading" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Usage</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody id="popcornUsageBody">
+                            <!-- Dynamic Content -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Platforms Card -->
+            <div class="card">
+                <div class="card-header" id="platformsHeading">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#platforms" aria-expanded="false" aria-controls="platforms">
+                            Logged-in Platforms
+                        </button>
+                    </h5>
+                </div>
+                <div id="platforms" class="collapse" aria-labelledby="platformsHeading" data-parent="#accordion">
+                    <div class="card-body">
+                        <ul id="platformsList">
+                            <!-- Dynamic Content -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    const userSearchForm = document.getElementById('userSearchForm');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const accordion = document.getElementById('accordion');
+    const displayUserId = document.getElementById('displayUserId');
+    const paymentHistoryBody = document.getElementById('paymentHistoryBody');
+    const popcornUsageBody = document.getElementById('popcornUsageBody');
+    const platformsList = document.getElementById('platformsList');
+
+    userSearchForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const userId = document.getElementById('userId').value;
+
+        // Show spinner and hide accordion
+        loadingSpinner.style.display = 'inline-block';
+        accordion.classList.add('d-none');
+
+        // Simulate fetching data
+        setTimeout(() => {
+            // Dummy data (replace with actual API response)
+            const userData = {
+                userId: userId,
+                payments: [
+                    { date: '2024-11-01', amount: '$10', method: 'Credit Card' },
+                    { date: '2024-11-15', amount: '$15', method: 'PayPal' }
+                ],
+                popcorn: [
+                    { date: '2024-11-03', usage: '5', description: 'Watched a movie' },
+                    { date: '2024-11-05', usage: '3', description: 'Redeemed reward' }
+                ],
+                platforms: ['Web', 'Mobile App', 'Smart TV']
+            };
+
+            // Populate data
+            displayUserId.textContent = userData.userId;
+
+            paymentHistoryBody.innerHTML = '';
+            userData.payments.forEach(payment => {
+                paymentHistoryBody.innerHTML += `
+                        <tr>
+                            <td>${payment.date}</td>
+                            <td>${payment.amount}</td>
+                            <td>${payment.method}</td>
+                        </tr>
+                    `;
+            });
+
+            popcornUsageBody.innerHTML = '';
+            userData.popcorn.forEach(pop => {
+                popcornUsageBody.innerHTML += `
+                        <tr>
+                            <td>${pop.date}</td>
+                            <td>${pop.usage}</td>
+                            <td>${pop.description}</td>
+                        </tr>
+                    `;
+            });
+
+            platformsList.innerHTML = '';
+            userData.platforms.forEach(platform => {
+                platformsList.innerHTML += `<li>${platform}</li>`;
+            });
+
+            // Hide spinner and show accordion
+            loadingSpinner.style.display = 'none';
+            accordion.classList.remove('d-none');
+        }, 1000);
+    });
+</script>
+</body>
+</html>

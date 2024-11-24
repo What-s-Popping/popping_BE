@@ -12,6 +12,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Collections;
+import java.util.Objects;
+
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,8 +32,6 @@ public class Member extends BaseEntity {
     @NotNull
     @Column(name = "BIRTH_DATE")
     private String birthDate;
-    @Column(name = "PRFOFILE_IMG_NAME")
-    private String profileImgName;
     @Column(name = "FIREBASE_TOKEN", columnDefinition = "VARBINARY(400) NOT NULL")
     private String firebaseToken;
     @Column(name = "REFRESH_TOKEN", columnDefinition = "VARBINARY(400)")
@@ -53,14 +54,13 @@ public class Member extends BaseEntity {
     private FriendGroup allFriendGroup;
 
     @Builder
-    public Member(String birthDate, String email, String firebaseToken, boolean isAllowNotify, String name, String phoneNumber, String profileImgName, String refreshToken, SignUpPlatform signUpPlatform, OsType osType, FriendGroup allFriendGroup) {
+    public Member(String birthDate, String email, String firebaseToken, boolean isAllowNotify, String name, String phoneNumber, String refreshToken, SignUpPlatform signUpPlatform, OsType osType, FriendGroup allFriendGroup) {
         this.birthDate = birthDate;
         this.email = email;
         this.firebaseToken = firebaseToken;
         this.isAllowNotify = isAllowNotify;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.profileImgName = profileImgName;
         this.refreshToken = refreshToken;
         this.role = Role.USER;
         this.signUpPlatform = signUpPlatform;
@@ -68,11 +68,18 @@ public class Member extends BaseEntity {
         this.allFriendGroup = allFriendGroup;
     }
 
-    public void updateProfileImg(String profileImgName) {
-        this.profileImgName = profileImgName;
+    public void updateName(String newName) {
+        this.name = newName;
     }
 
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public String getProfileImgFileName() {
+        if (Objects.isNull(getPk())) {
+            throw new RuntimeException("멤버 객체 생성 전이라 pk가 없어 파일이름 생성 불가합니다.");
+        }
+        return getPk().toString().concat(".jpeg");
     }
 }

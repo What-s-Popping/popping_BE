@@ -66,7 +66,6 @@ public class AuthMemberDto {
                     .isAllowNotify(isAllowNotify)
                     .signUpPlatform(signUpPlatform)
                     .firebaseToken(firebaseToken)
-                    .profileImgName(img == null || img.isEmpty() ? null : UUID.randomUUID().toString())
                     .osType(osType)
                     .build();
         }

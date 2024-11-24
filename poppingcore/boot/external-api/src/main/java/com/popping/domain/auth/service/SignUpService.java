@@ -33,7 +33,7 @@ public class SignUpService {
         friendGroupService.saveFriendGroup(FriendGroup.builder().groupOwner(requester).build());
 
         if (isKakaoProfileImgSaveCond(signUpRequestDto.getSignUpPlatform(), file)) {
-            imgSaveService.saveProfileImg(requester.getProfileImgName(), signUpRequestDto.getExtension(), file);
+            imgSaveService.saveProfileImg(requester.getPk().toString(), signUpRequestDto.getExtension(), file);
         }
 
         return new AuthMemberDto.SignUpResponse(tokens);
