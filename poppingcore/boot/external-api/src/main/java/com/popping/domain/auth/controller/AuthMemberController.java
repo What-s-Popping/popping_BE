@@ -23,13 +23,12 @@ public class AuthMemberController {
     private static final String AUTHORIZATION = "Authorization";
 
     @PostMapping("/sign-up")
-    public ResponseEntity<ResponseForm<AuthMemberDto.SignUpResponse>> signUp(@RequestPart @Valid AuthMemberDto.SignUpRequest signUpRequestDto,
-                                                                             @RequestPart(required = false) MultipartFile img) {
+    public ResponseEntity<ResponseForm<AuthMemberDto.SignUpResponse>> signUp(@Valid AuthMemberDto.SignUpRequest signUpRequestDto) {
         return ResponseEntity.created(URI.create(""))
                 .body(ResponseForm.<AuthMemberDto.SignUpResponse>builder()
                         .httpStatus(HttpStatus.CREATED)
                         .responseMessage("Sign up successfully")
-                        .content(signUpService.signUp(signUpRequestDto, img))
+                        .content(signUpService.signUp(signUpRequestDto))
                         .build());
     }
 
