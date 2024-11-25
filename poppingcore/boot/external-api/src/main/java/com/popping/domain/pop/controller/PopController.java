@@ -36,8 +36,8 @@ public class PopController {
     }
 
     @GetMapping(value = {"", "/{lastId}"})
-    public ResponseEntity<List<PopDto.Response>> getFriends(@PathVariable(required = false) Optional<Long> lastId,
-                                                            @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(findPopService.findFriendPops(lastId, Long.valueOf(userDetails.getUsername())));
+    public ResponseEntity<List<PopDto.Response>> findNotExpiredFriendPops(@PathVariable(required = false) Optional<Long> lastId,
+                                                                          @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(findPopService.findNotExpiredFriendPops(lastId, Long.valueOf(userDetails.getUsername())));
     }
 }

@@ -5,6 +5,8 @@ import com.popping.data.report.repository.PopReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PopReportService {
@@ -16,5 +18,9 @@ public class PopReportService {
 
     public boolean isExist(Long reporterPk, Long targetPk) {
         return popReportRepository.existsByReporter_PkAndTarget_Pk(reporterPk, targetPk);
+    }
+
+    public List<Long> findNotExpiredReportPopPks(Long requesterPk) {
+        return popReportRepository.findNotExpiredReportPopPks(requesterPk);
     }
 }

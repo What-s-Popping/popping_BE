@@ -21,8 +21,8 @@ public class RePopController {
     private final FindRePopService findRePopService;
 
     @GetMapping(value = {"", "/{lastId}"})
-    public ResponseEntity<List<RePopDto.Response>> findFriendRePops(@PathVariable(required = false) Optional<Long> lastId,
-                                                                   @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(findRePopService.findFriendRePops(lastId, Long.valueOf(userDetails.getUsername())));
+    public ResponseEntity<List<RePopDto.Response>> findNotExpiredFriendRePops(@PathVariable(required = false) Optional<Long> lastId,
+                                                                              @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(findRePopService.findNotExpiredFriendRePops(lastId, Long.valueOf(userDetails.getUsername())));
     }
 }

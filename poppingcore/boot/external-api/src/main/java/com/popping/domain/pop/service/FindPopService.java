@@ -1,6 +1,8 @@
 package com.popping.domain.pop.service;
 
+import com.popping.data.block.service.BlockMemberService;
 import com.popping.data.pop.service.PopService;
+import com.popping.data.report.service.PopReportService;
 import com.popping.domain.img.service.FindImgService;
 import com.popping.domain.pop.dto.PopDto;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +18,13 @@ import java.util.Optional;
 public class FindPopService {
     private final PopService popService;
     private final FindImgService imgService;
+    private final BlockMemberService blockMemberService;
+    private final PopReportService popReportService;
 
-    public List<PopDto.Response> findFriendPops(Optional<Long> lastPk, Long memberPk) {
-        return popService.findFriendPops(lastPk, memberPk).stream()
+    public List<PopDto.Response> findNotExpiredFriendPops(Optional<Long> lastPk, Long requesterPk) {
+        List<Long> blockMemberPks = blockMemberService.findBlockMembers(requesterPk);
+        List<Long> reportPopPks = popReportService.findNotExpiredReportPopPks(requesterPk);
+        return popService.findFriendPops(blockMemberPks, reportPopPks, lastPk, requesterPk).stream()
                 .map(pop -> PopDto.Response.builder()
                         .id(pop.getPk())
                         .nickname(pop.getWriter().getName())

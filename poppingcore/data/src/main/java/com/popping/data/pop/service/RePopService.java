@@ -17,15 +17,16 @@ public class RePopService {
     private final RePopRepository rePopRepository;
     private static final int MAX_SIZE = 50;
 
-    public List<RePop> findFriendRePops(Optional<Long> lastPk, Long requesterPk) {
+    public List<RePop> findNotExpiredFriendRePops(List<Long> blockMemberPks,
+                                                  List<Long> reportRePopPks,
+                                                  Optional<Long> lastPk,
+                                                  Long requesterPk) {
         PageRequest pageRequest = PageRequest.ofSize(MAX_SIZE);
-        return rePopRepository.findFriendRePops(lastPk.orElse(null), requesterPk, pageRequest);
+        return rePopRepository.findNotExpiredFriendRePops(lastPk.orElse(null), requesterPk, reportRePopPks, blockMemberPks, pageRequest);
     }
 
     public RePop findRePop(Long rePopPk) {
         return rePopRepository.findById(rePopPk)
                 .orElseThrow(() -> new EntityNotFoundException(ExceptionMessage.RE_POP_NOT_FOUND.getMessage()));
     }
-
-
 }

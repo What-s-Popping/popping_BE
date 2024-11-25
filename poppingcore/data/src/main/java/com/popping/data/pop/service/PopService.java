@@ -35,9 +35,12 @@ public class PopService {
         return popRepository.findMyPopNextPage(lastIdx.orElse(null), memberPk, pageRequest);
     }
 
-    public List<Pop> findFriendPops(Optional<Long> lastPk, Long memberPk) {
+    public List<Pop> findFriendPops(List<Long> blockMemberPks,
+                                    List<Long> reportPopPks,
+                                    Optional<Long> lastPk,
+                                    Long requesterPk) {
         PageRequest pageRequest = PageRequest.ofSize(MAX_SIZE);
-        return popRepository.findFriendPops(lastPk.orElse(null), memberPk, pageRequest);
+        return popRepository.findFriendPops(lastPk.orElse(null), requesterPk, reportPopPks, blockMemberPks, pageRequest);
     }
 
     public Pop findPop(Long popPk) {

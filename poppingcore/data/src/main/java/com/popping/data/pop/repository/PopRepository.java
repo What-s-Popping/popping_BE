@@ -20,7 +20,6 @@ public interface PopRepository extends JpaRepository<Pop,Long> {
     @Query("select p from Pop p where (:lastId is null or p.pk < :lastId) and p.writer.pk = :memberPk order by p.pk desc ")
     List<Pop> findMyPopNextPage(@Param("lastId") Long lastId, @Param("memberPk") Long memberPk, PageRequest pageRequest);
 
-    // todo 신고한 pop, 차단한 친구 필터링 로직 추가
     @Query("select p from Pop p " +
                 "join fetch p.writer " +
                 "left join SharedGroupMember sgm on p.sharedGroup = sgm.sharedGroup " +
@@ -28,9 +27,13 @@ public interface PopRepository extends JpaRepository<Pop,Long> {
             "where (sgm.member.pk = :requesterPk or fgm.member.pk = :requesterPk) " +
                 "and (:lastPk is null or p.pk < :lastPk) " +
                 "and p.createdAt > (current_timestamp - 1 day) " +
+                "and p.writer.pk not in :blockMemberPks " +
+                "and p.pk not in :reportPopPks " +
             "order by p.pk desc")
     List<Pop> findFriendPops(@Param("lastPk") Long lastPk,
                              @Param("requesterPk") Long requesterPk,
+                             @Param("reportPopPks") List<Long> reportPopPks,
+                             @Param("blockMemberPks") List<Long> blockMemberPks,
                              Pageable pageable);
 }
 
