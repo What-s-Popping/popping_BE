@@ -27,7 +27,7 @@ public class SavePopService {
 
     @Transactional
     public void savePop(PopDto.Request request, Long memberPk) {
-        Member member = memberService.findMember(memberPk).orElseThrow(NoSuchElementException::new);
+        Member member = memberService.findMemberOp(memberPk).orElseThrow(NoSuchElementException::new);
         if (request.isGlobalShare()) {
             popService.save(Pop.builder()
                     .isPrivateProfile(request.isPrivateProfile())

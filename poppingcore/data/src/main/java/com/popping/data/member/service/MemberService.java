@@ -4,6 +4,7 @@ import com.popping.data.member.entity.Member;
 import com.popping.data.member.entity.signupplatform.SignUpPlatform;
 import com.popping.data.member.repository.MemberRepository;
 import com.popping.global.exceptionmessage.ExceptionMessage;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,13 @@ public class MemberService {
         return memberRepository.findMember(email, signUpPlatform);
     }
 
-    public Optional<Member> findMember(Long memberPk) {
+    public Optional<Member> findMemberOp(Long memberPk) {
         return memberRepository.findById(memberPk);
+    }
+
+    public Member findMember(Long memberPk) {
+        return memberRepository.findById(memberPk)
+                .orElseThrow(() -> new EntityNotFoundException(ExceptionMessage.MEMBER_NOT_FOUND.getMessage()));
     }
 
     public List<Member> findMembers(List<Long> memberPks) {

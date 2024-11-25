@@ -19,7 +19,7 @@ public class ProfileService {
     private final S3Service s3Service;
 
     public MemberInfoDto.Response findNameAndProfileImg(Long memberPk){
-        Member member = memberService.findMember(memberPk).orElseThrow(NoSuchElementException::new);
+        Member member = memberService.findMemberOp(memberPk).orElseThrow(NoSuchElementException::new);
         String name = member.getName();
         String profileImgUrl = null;
         if (s3Service.isImgSaved(S3ImgPathPrefix.PROFILE.getPathPrefix(), member.getProfileImgFileName())) {
@@ -30,7 +30,7 @@ public class ProfileService {
     }
 
     public ProfileDto.Response generateProfileImgUploadUrl(Long memberPk) {
-        Member member = memberService.findMember(memberPk).orElseThrow(NoSuchElementException::new);
+        Member member = memberService.findMemberOp(memberPk).orElseThrow(NoSuchElementException::new);
         String imgName = member.getProfileImgFileName();
         String putPresignedUrl = s3Service.generatePutPresignedUrl(S3ImgPathPrefix.PROFILE, imgName);
         return ProfileDto.Response.builder()
@@ -41,7 +41,7 @@ public class ProfileService {
 
     @Transactional
     public void updateProfileName(Long memberPk, ProfileDto.Request request) {
-        memberService.findMember(memberPk).orElseThrow(NoSuchElementException::new)
+        memberService.findMemberOp(memberPk).orElseThrow(NoSuchElementException::new)
                 .updateName(request.getUpdateName());
     }
 }

@@ -20,4 +20,9 @@ public class FriendController {
     public ResponseEntity<?> getFriendsList(@AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(findFriendService.getFriendsForSharing(Long.valueOf(userDetails.getUsername())));
     }
+
+    @GetMapping("/existence")
+    public ResponseEntity<?> getFriendExistence(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(findFriendService.getFriendExistence(Long.valueOf(userDetails.getUsername())));
+    }
 }

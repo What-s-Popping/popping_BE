@@ -5,6 +5,7 @@ import com.popping.data.friendgroup.entity.FriendGroupMember;
 import com.popping.data.friendgroup.service.FriendGroupMemberService;
 import com.popping.data.friendgroup.service.FriendGroupService;
 import com.popping.domain.friend.dto.FindFriendDto;
+import com.popping.domain.friend.dto.FindFriendExistenceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +21,11 @@ public class FindFriendService {
         FriendGroup friendGroup = friendGroupService.findFriendGroup(memberPk);
         List<FriendGroupMember> friendGroupMembers = friendGroupMemberService.findFriendGroupMembersFetchMember(friendGroup);
         return FindFriendDto.Response.of(friendGroupMembers);
+    }
+
+    public FindFriendExistenceDto.Response getFriendExistence(Long requesterPk) {
+        return FindFriendExistenceDto.Response.builder()
+                .isExist(friendGroupMemberService.findFriendExistence(requesterPk))
+                .build();
     }
 }
