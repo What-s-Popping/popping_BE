@@ -2,10 +2,8 @@ package com.popping.domain.auth.controller;
 
 import com.popping.domain.auth.dto.AuthSmsDto;
 import com.popping.domain.auth.service.SmsVerifyService;
-import com.popping.global.responseform.ResponseForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,11 +22,7 @@ public class SmsController {
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<ResponseForm<AuthSmsDto.VerifyCodeResponse>> verifySmsCode(@RequestBody @Valid AuthSmsDto.VerifyCodeRequest request) {
-        return ResponseEntity.ok(ResponseForm.<AuthSmsDto.VerifyCodeResponse>builder()
-                        .httpStatus(HttpStatus.OK)
-                        .responseMessage("Verify Successfully")
-                        .content(smsVerifyUseCase.verifyCode(request))
-                .build());
+    public ResponseEntity<AuthSmsDto.VerifyCodeResponse> verifySmsCode(@RequestBody @Valid AuthSmsDto.VerifyCodeRequest request) {
+        return ResponseEntity.ok(smsVerifyUseCase.verifyCode(request));
     }
 }

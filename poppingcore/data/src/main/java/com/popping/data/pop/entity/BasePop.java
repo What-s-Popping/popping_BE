@@ -1,24 +1,19 @@
-package com.popping.data.post.entity;
+package com.popping.data.pop.entity;
 
-import com.popping.data.friendgroup.entity.CommonGroup;
 import com.popping.data.member.entity.Member;
-import com.popping.data.post.chip.ColorChip;
+import com.popping.data.pop.chip.ColorChip;
 import com.popping.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Entity
+@MappedSuperclass
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Pop extends BaseEntity {
-
+public abstract class BasePop extends BaseEntity {
     @Column
     private boolean isPrivateProfile;
-    @Column
-    private boolean isGlobalShared;
     @Column
     private String chip;
     @Column
@@ -33,19 +28,12 @@ public class Pop extends BaseEntity {
     @JoinColumn(name = "writer", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member writer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sharedGroup",foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private CommonGroup sharedGroup;
-
-    @Builder
-    public Pop(boolean isPrivateProfile, boolean isGlobalShared, String chip, ColorChip colorChip, String contents, String imgName, Member writer, CommonGroup sharedGroup) {
-        this.isPrivateProfile = isPrivateProfile;
-        this.isGlobalShared = isGlobalShared;
+    public BasePop(String chip, ColorChip colorChip, String contents, String imgName, boolean isPrivateProfile, Member writer) {
         this.chip = chip;
         this.colorChip = colorChip;
         this.contents = contents;
         this.imgName = imgName;
+        this.isPrivateProfile = isPrivateProfile;
         this.writer = writer;
-        this.sharedGroup = sharedGroup;
     }
 }

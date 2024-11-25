@@ -1,6 +1,8 @@
 package com.popping.domain.member.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class ProfileDto {
     @Getter

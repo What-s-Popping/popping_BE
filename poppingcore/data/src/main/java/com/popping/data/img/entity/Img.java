@@ -1,6 +1,6 @@
 package com.popping.data.img.entity;
 
-import com.popping.data.post.entity.Pop;
+import com.popping.data.pop.entity.Pop;
 import com.popping.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

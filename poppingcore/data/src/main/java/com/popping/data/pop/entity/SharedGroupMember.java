@@ -1,4 +1,4 @@
-package com.popping.data.post.entity;
+package com.popping.data.pop.entity;
 
 import com.popping.data.member.entity.Member;
 import com.popping.global.entity.BaseEntity;

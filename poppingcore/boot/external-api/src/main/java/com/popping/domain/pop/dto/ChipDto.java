@@ -1,6 +1,6 @@
 package com.popping.domain.pop.dto;
 
-import com.popping.data.post.chip.Chip;
+import com.popping.data.pop.chip.Chip;
 import lombok.Builder;
 import lombok.Getter;
 

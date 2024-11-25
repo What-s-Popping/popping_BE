@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class ImgSaveService {
+public class SaveImgService {
     private final S3Service s3Service;
     private final ImgService imgService;
 

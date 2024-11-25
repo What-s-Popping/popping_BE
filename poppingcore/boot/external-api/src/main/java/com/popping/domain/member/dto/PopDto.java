@@ -1,6 +1,6 @@
 package com.popping.domain.member.dto;
 
-import com.popping.data.post.chip.ColorChip;
+import com.popping.data.pop.chip.ColorChip;
 import lombok.Builder;
 import lombok.Getter;
 

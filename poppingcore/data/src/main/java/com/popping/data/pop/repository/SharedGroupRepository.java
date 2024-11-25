@@ -1,6 +1,6 @@
-package com.popping.data.post.repository;
+package com.popping.data.pop.repository;
 
-import com.popping.data.post.entity.SharedGroup;
+import com.popping.data.pop.entity.SharedGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SharedGroupRepository extends JpaRepository<SharedGroup, Long> {

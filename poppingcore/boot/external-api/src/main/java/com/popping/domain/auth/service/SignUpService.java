@@ -8,7 +8,7 @@ import com.popping.data.member.service.MemberService;
 import com.popping.data.member.service.PolicyTermService;
 import com.popping.domain.auth.dto.AuthMemberDto;
 import com.popping.domain.auth.dto.TokenDto;
-import com.popping.domain.img.service.ImgSaveService;
+import com.popping.domain.img.service.SaveImgService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class SignUpService {
     private final MemberService memberService;
-    private final ImgSaveService imgSaveService;
+    private final SaveImgService saveImgService;
     private final PolicyTermService policyTermService;
     private final TokenService tokenService;
     private final FriendGroupService friendGroupService;
@@ -33,7 +33,7 @@ public class SignUpService {
         friendGroupService.saveFriendGroup(FriendGroup.builder().groupOwner(requester).build());
 
         if (isKakaoProfileImgSaveCond(signUpRequestDto.getSignUpPlatform(), file)) {
-            imgSaveService.saveProfileImg(requester.getPk().toString(), signUpRequestDto.getExtension(), file);
+            saveImgService.saveProfileImg(requester.getPk().toString(), signUpRequestDto.getExtension(), file);
         }
 
         return new AuthMemberDto.SignUpResponse(tokens);

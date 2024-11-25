@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.UUID;
-
 public class AuthMemberDto {
     @Getter
     @Setter

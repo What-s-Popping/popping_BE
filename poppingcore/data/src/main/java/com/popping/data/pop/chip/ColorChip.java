@@ -1,4 +1,4 @@
-package com.popping.data.post.chip;
+package com.popping.data.pop.chip;
 
 public enum ColorChip {
     WHILE_BLACK,

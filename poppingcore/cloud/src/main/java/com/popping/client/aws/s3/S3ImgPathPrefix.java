@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public enum S3ImgPathPrefix {
     PROFILE("profile/"),
-    POP("pop/");
+    POP("pop/"),
+    RE_POP("re-pop/");
 
     private final String pathPrefix;
     S3ImgPathPrefix(String pathPrefix) {

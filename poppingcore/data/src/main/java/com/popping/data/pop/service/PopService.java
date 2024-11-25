@@ -1,7 +1,7 @@
-package com.popping.data.post.service;
+package com.popping.data.pop.service;
 
-import com.popping.data.post.entity.Pop;
-import com.popping.data.post.repository.PopRepository;
+import com.popping.data.pop.entity.Pop;
+import com.popping.data.pop.repository.PopRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -14,6 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PopService {
     private final PopRepository popRepository;
+    private static final int MAX_SIZE = 50;
 
     public void save(Pop pop) {
         popRepository.save(pop);
@@ -28,7 +29,12 @@ public class PopService {
     }
 
     public List<Pop> findMyPopNextPage(Optional<Long> lastIdx, Long memberPk) {
-        PageRequest pageRequest = PageRequest.ofSize(50);
+        PageRequest pageRequest = PageRequest.ofSize(MAX_SIZE);
         return popRepository.findMyPopNextPage(lastIdx.orElse(null), memberPk, pageRequest);
+    }
+
+    public List<Pop> findFriendPops(Optional<Long> lastPk, Long memberPk) {
+        PageRequest pageRequest = PageRequest.ofSize(MAX_SIZE);
+        return popRepository.findFriendPops(lastPk.orElse(null), memberPk, pageRequest);
     }
 }

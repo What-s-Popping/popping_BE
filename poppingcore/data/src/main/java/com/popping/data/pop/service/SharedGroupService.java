@@ -1,7 +1,7 @@
-package com.popping.data.post.service;
+package com.popping.data.pop.service;
 
-import com.popping.data.post.entity.SharedGroup;
-import com.popping.data.post.repository.SharedGroupRepository;
+import com.popping.data.pop.entity.SharedGroup;
+import com.popping.data.pop.repository.SharedGroupRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

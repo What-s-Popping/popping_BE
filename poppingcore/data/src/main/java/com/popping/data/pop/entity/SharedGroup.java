@@ -1,4 +1,4 @@
-package com.popping.data.post.entity;
+package com.popping.data.pop.entity;
 
 import com.popping.data.friendgroup.entity.CommonGroup;
 import jakarta.persistence.Entity;
