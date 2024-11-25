@@ -1,8 +1,10 @@
 package com.popping.global.advice;
 
 import com.popping.global.exception.SignInRequiredException;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,22 +20,27 @@ public class ValidExceptionHandler {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<String> entityNotFoundException(Exception e) {
+    public ResponseEntity<String> entityNotFoundException(EntityNotFoundException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<String> EntityExistsException(EntityExistsException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
+
     @ExceptionHandler(UnsupportedOperationException.class)
-    public ResponseEntity<String> unsupportedOperationException(Exception e) {
+    public ResponseEntity<String> unsupportedOperationException(UnsupportedOperationException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<String> ConstraintViolationException1(Exception e) {
+    public ResponseEntity<String> ConstraintViolationException1(ConstraintViolationException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> MethodArgumentNotValidException(Exception e) {
+    public ResponseEntity<String> MethodArgumentNotValidException(MethodArgumentNotValidException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 

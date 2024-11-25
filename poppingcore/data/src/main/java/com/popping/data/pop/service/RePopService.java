@@ -2,6 +2,8 @@ package com.popping.data.pop.service;
 
 import com.popping.data.pop.entity.RePop;
 import com.popping.data.pop.repository.RePopRepository;
+import com.popping.global.exceptionmessage.ExceptionMessage;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -19,4 +21,11 @@ public class RePopService {
         PageRequest pageRequest = PageRequest.ofSize(MAX_SIZE);
         return rePopRepository.findFriendRePops(lastPk.orElse(null), requesterPk, pageRequest);
     }
+
+    public RePop findRePop(Long rePopPk) {
+        return rePopRepository.findById(rePopPk)
+                .orElseThrow(() -> new EntityNotFoundException(ExceptionMessage.RE_POP_NOT_FOUND.getMessage()));
+    }
+
+
 }
