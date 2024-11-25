@@ -44,4 +44,8 @@ public class MemberService {
     public int findPopcornBalance(Long memberPk) {
         return memberRepository.findPopcorn(memberPk).orElseThrow(NoSuchElementException::new);
     }
+
+    public boolean isSignUpMember(String email, SignUpPlatform signUpPlatform) {
+        return memberRepository.existsByEmailAndSignUpPlatform(email, signUpPlatform);
+    }
 }

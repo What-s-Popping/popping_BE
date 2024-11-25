@@ -9,6 +9,8 @@ import com.popping.data.member.service.PolicyTermService;
 import com.popping.domain.auth.dto.AuthMemberDto;
 import com.popping.domain.auth.dto.TokenDto;
 import com.popping.domain.img.service.ImgSaveService;
+import com.popping.global.exceptionmessage.ExceptionMessage;
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,19 +26,31 @@ public class SignUpService {
     private final FriendGroupService friendGroupService;
 
     @Transactional
-    public AuthMemberDto.SignUpResponse signUp(AuthMemberDto.SignUpRequest signUpRequestDto, MultipartFile file) {
-        Member requester = signUpRequestDto.of(file);
+    public AuthMemberDto.SignUpResponse signUp(AuthMemberDto.SignUpRequest requestDto) {
+        verifySignUpCond(requestDto);
+
+        Member requester = requestDto.of();
         memberService.saveMember(requester);
         TokenDto.Tokens tokens = tokenService.createTokens(requester.getPk(), requester.getRole());
         requester.updateRefreshToken(tokens.getRefreshToken().getToken());
-        policyTermService.savePolicyTerm(signUpRequestDto.of(requester));
+        policyTermService.savePolicyTerm(requestDto.of(requester));
         friendGroupService.saveFriendGroup(FriendGroup.builder().groupOwner(requester).build());
 
-        if (isKakaoProfileImgSaveCond(signUpRequestDto.getSignUpPlatform(), file)) {
-            imgSaveService.saveProfileImg(requester.getPk().toString(), signUpRequestDto.getExtension(), file);
+        if (isKakaoProfileImgSaveCond(requestDto.getSignUpPlatform(), requestDto.getFile())) {
+            imgSaveService.saveProfileImg(requester.getPk().toString(), requestDto.getExtension(), requestDto.getFile());
         }
 
         return new AuthMemberDto.SignUpResponse(tokens);
+    }
+
+    private void verifySignUpCond(AuthMemberDto.SignUpRequest requestDto) {
+        if (requestDto.isExistNotAllowPolicies()) {
+            throw new IllegalStateException(ExceptionMessage.ALL_POLICIES_NOT_AGREED.getMessage());
+        }
+
+        if (memberService.isSignUpMember(requestDto.getEmail(), requestDto.getSignUpPlatform())) {
+            throw new EntityExistsException(ExceptionMessage.ALREADY_SIGN_UP_EMAIL.getMessage());
+        }
     }
 
     protected boolean isKakaoProfileImgSaveCond(SignUpPlatform signUpPlatform, MultipartFile file) {
