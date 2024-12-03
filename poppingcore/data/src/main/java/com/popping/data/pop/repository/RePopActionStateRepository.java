@@ -1,6 +1,5 @@
 package com.popping.data.pop.repository;
 
-import com.popping.data.pop.entity.PopActionState;
 import com.popping.data.pop.entity.RePopActionState;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

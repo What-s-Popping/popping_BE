@@ -1,7 +1,6 @@
 package com.popping.domain.pop.controller;
 
 import com.popping.domain.pop.dto.EmotionDto;
-import com.popping.domain.pop.service.SavePopActionStateService;
 import com.popping.domain.pop.service.SaveRePopActionStateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

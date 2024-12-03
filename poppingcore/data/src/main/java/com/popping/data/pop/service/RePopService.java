@@ -29,4 +29,8 @@ public class RePopService {
         return rePopRepository.findById(rePopPk)
                 .orElseThrow(() -> new EntityNotFoundException(ExceptionMessage.RE_POP_NOT_FOUND.getMessage()));
     }
+
+    public void save(RePop rePop) {
+        rePopRepository.save(rePop);
+    }
 }
