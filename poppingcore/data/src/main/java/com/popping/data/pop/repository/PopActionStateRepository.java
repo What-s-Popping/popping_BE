@@ -31,6 +31,6 @@ public interface PopActionStateRepository extends JpaRepository<PopActionState, 
                 "and pas.pop.pk = :popPk " +
                 "and pas.actionState != 'RE_POP' " +
                 "and pas.actionState != 'SHARED' " +
-                "and pas.actionState != 'SAVED'")
+                "and pas.actionState != 'IMG_SAVED'")
     Optional<PopActionState> findEmotionState(@Param("memberPk") Long memberPk, @Param("popPk") Long popPk);
 }

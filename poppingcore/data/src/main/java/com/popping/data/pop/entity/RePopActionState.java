@@ -11,14 +11,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PopActionState extends BaseActionState {
+public class RePopActionState extends BaseActionState {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pop", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Pop pop;
+    @JoinColumn(name = "rePop", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private RePop rePop;
 
     @Builder
-    public PopActionState(ActionState actionState, Member member, Pop pop) {
+    public RePopActionState(ActionState actionState, Member member, RePop rePop) {
         super(actionState, member);
-        this.pop = pop;
+        this.rePop = rePop;
     }
 }
