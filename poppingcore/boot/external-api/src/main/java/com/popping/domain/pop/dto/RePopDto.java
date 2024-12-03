@@ -1,7 +1,9 @@
 package com.popping.domain.pop.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.popping.data.member.entity.Member;
 import com.popping.data.pop.chip.ColorChip;
+import com.popping.data.pop.entity.RePop;
 import com.popping.domain.pop.dto.poptype.PopType;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
@@ -17,11 +19,25 @@ public class RePopDto {
         @NotBlank
         private String contents;
         private ColorChip colorChip;
-        private Long targetMember;
+        private PopType targetPopType;
+        private Long targetMemberId;
+        private Long targetPopId;
         private String imgName;
 
         public boolean isExistImg() {
             return imgName != null && !imgName.isBlank();
+        }
+
+        public RePop of(Member writer, Member targetMember) {
+            return RePop.builder()
+                    .isPrivateProfile(isPrivateProfile)
+                    .chip(chip)
+                    .colorChip(colorChip)
+                    .writer(writer)
+                    .targetMember(targetMember)
+                    .imgName(imgName)
+                    .contents(contents)
+                    .build();
         }
     }
 
