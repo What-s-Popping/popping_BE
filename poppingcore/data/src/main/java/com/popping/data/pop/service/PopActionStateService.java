@@ -16,16 +16,16 @@ public class PopActionStateService {
         popActionStateRepository.save(popActionState);
     }
 
-    public Optional<PopActionState> findImgSavedState(Long memberPk, Long popPk) {
-        return popActionStateRepository.findImgSavedState(memberPk, popPk);
+    public boolean isNotExistImgSavedState(Long memberPk, Long popPk) {
+        return popActionStateRepository.findImgSavedState(memberPk, popPk).isEmpty();
     }
 
-    public Optional<PopActionState> findSharedState(Long memberPk, Long popPk) {
-        return popActionStateRepository.findSharedState(memberPk, popPk);
+    public boolean isNotExistSharedState(Long memberPk, Long popPk) {
+        return popActionStateRepository.findSharedState(memberPk, popPk).isEmpty();
     }
 
-    public Optional<PopActionState> findRePopState(Long memberPk, Long popPk) {
-        return popActionStateRepository.findRePopState(memberPk, popPk);
+    public boolean isNotExistRePopState(Long memberPk, Long popPk) {
+        return popActionStateRepository.findRePopState(memberPk, popPk).isEmpty();
     }
 
     public Optional<PopActionState> findEmotionState(Long memberPk, Long popPk) {

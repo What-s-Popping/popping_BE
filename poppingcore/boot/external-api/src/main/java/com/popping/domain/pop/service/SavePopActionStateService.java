@@ -38,37 +38,31 @@ public class SavePopActionStateService {
 
     @Transactional
     public void saveImgSaveAction(Long memberPk, Long popPk) {
-        Optional<PopActionState> sharedState = popActionStateService.findImgSavedState(memberPk, popPk);
-
-        saveOrUpdateTime(sharedState, ActionState.IMG_SAVED, memberPk, popPk);
+        boolean isNotExistImgSavedState = popActionStateService.isNotExistImgSavedState(memberPk, popPk);
+        saveActionState(isNotExistImgSavedState, ActionState.IMG_SAVED, memberPk, popPk);
     }
 
     @Transactional
     public void saveRePopAction(Long memberPk, Long popPk) {
-        Optional<PopActionState> sharedState = popActionStateService.findRePopState(memberPk, popPk);
-
-        saveOrUpdateTime(sharedState, ActionState.RE_POP, memberPk, popPk);
+        boolean isNotExistRePopState = popActionStateService.isNotExistRePopState(memberPk, popPk);
+        saveActionState(isNotExistRePopState, ActionState.RE_POP, memberPk, popPk);
     }
 
     @Transactional
     public void saveShareAction(Long memberPk, Long popPk) {
-        Optional<PopActionState> sharedState = popActionStateService.findSharedState(memberPk, popPk);
-
-        saveOrUpdateTime(sharedState, ActionState.SHARED, memberPk, popPk);
+        boolean isNotExistSharedState = popActionStateService.isNotExistSharedState(memberPk, popPk);
+        saveActionState(isNotExistSharedState, ActionState.SHARED, memberPk, popPk);
     }
 
-    private void saveOrUpdateTime(Optional<PopActionState> popActionState, ActionState actionState, Long memberPk, Long popPk) {
-        if (popActionState.isPresent()) {
-            popActionState.get().updateCreatedAt();
-            return;
+    private void saveActionState(boolean isNotExistActionState, ActionState actionState, Long memberPk, Long popPk) {
+        if (isNotExistActionState) {
+            popActionStateService.save(
+                    PopActionState.builder()
+                            .member(memberService.findMember(memberPk))
+                            .pop(popService.findPop(popPk))
+                            .actionState(actionState)
+                            .build()
+            );
         }
-
-        popActionStateService.save(
-                PopActionState.builder()
-                        .member(memberService.findMember(memberPk))
-                        .pop(popService.findPop(popPk))
-                        .actionState(actionState)
-                        .build()
-        );
     }
 }
