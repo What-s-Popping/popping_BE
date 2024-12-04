@@ -1,5 +1,6 @@
 package com.popping.domain.pop.service;
 
+import com.popping.data.img.service.ImgService;
 import com.popping.data.member.entity.Member;
 import com.popping.data.member.service.MemberService;
 import com.popping.data.pop.entity.RePop;
@@ -22,6 +23,7 @@ public class SaveRePopService {
     private final FindImgService findImgService;
     private final SavePopActionStateService savePopActionStateService;
     private final SaveRePopActionStateService saveRePopActionStateService;
+    private final ImgService imgService;
 
     @Transactional
     public void save(Long writerPk, RePopDto.Request requestDto) {
@@ -35,6 +37,10 @@ public class SaveRePopService {
 
         rePopService.save(rePop);
         saveActionState(writerPk, requestDto.getTargetPopType(), requestDto.getTargetPopId());
+
+        if (requestDto.isExistImg()) {
+            imgService.updateRePop(rePop, requestDto.getImgName());
+        }
     }
 
     private void saveActionState(Long writerPk, PopType targetPopType, Long targetPopId) {
