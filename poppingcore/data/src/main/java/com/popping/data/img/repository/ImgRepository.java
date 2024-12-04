@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Optional;
-
 public interface ImgRepository extends JpaRepository<Img,Long> {
     @Modifying
     @Query("update Img i set i.rePop = :rePop where i.imgName = :imgName")

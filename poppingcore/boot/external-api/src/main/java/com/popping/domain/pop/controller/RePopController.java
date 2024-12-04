@@ -1,5 +1,6 @@
 package com.popping.domain.pop.controller;
 
+import com.popping.domain.pop.dto.RePopDetailDto;
 import com.popping.domain.pop.dto.RePopDto;
 import com.popping.domain.pop.service.FindRePopService;
 import com.popping.domain.pop.service.SaveRePopService;
@@ -20,8 +21,8 @@ public class RePopController {
     private final FindRePopService findRePopService;
     private final SaveRePopService saveRePopService;
 
-    @GetMapping(value = {"", "/{lastId}"})
-    public ResponseEntity<List<RePopDto.Response>> findNotExpiredFriendRePops(@PathVariable(required = false) Optional<Long> lastId,
+    @GetMapping("")
+    public ResponseEntity<List<RePopDto.Response>> findNotExpiredFriendRePops(@RequestParam(required = false) Optional<Long> lastId,
                                                                               @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(findRePopService.findNotExpiredFriendRePops(lastId, Long.valueOf(userDetails.getUsername())));
     }
@@ -32,5 +33,11 @@ public class RePopController {
         saveRePopService.save(Long.valueOf(userDetails.getUsername()), requestDto);
 
         return ResponseEntity.created(URI.create("")).build();
+    }
+
+    @GetMapping("/{rePopPk}")
+    public ResponseEntity<RePopDetailDto.Response> findDetailPop(@PathVariable Long rePopPk,
+                                                                 @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(findRePopService.findRePopDetail(rePopPk, Long.valueOf(userDetails.getUsername())));
     }
 }

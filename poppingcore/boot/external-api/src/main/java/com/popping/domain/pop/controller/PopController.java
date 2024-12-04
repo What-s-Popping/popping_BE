@@ -2,6 +2,7 @@ package com.popping.domain.pop.controller;
 
 import com.popping.data.pop.chip.Chip;
 import com.popping.domain.pop.dto.ChipDto;
+import com.popping.domain.pop.dto.PopDetailDto;
 import com.popping.domain.pop.dto.PopDto;
 import com.popping.domain.pop.service.FindPopService;
 import com.popping.domain.pop.service.SavePopService;
@@ -35,9 +36,15 @@ public class PopController {
         return ResponseEntity.ok(ChipDto.Response.builder().chips(Chip.values()).build());
     }
 
-    @GetMapping(value = {"", "/{lastId}"})
-    public ResponseEntity<List<PopDto.Response>> findNotExpiredFriendPops(@PathVariable(required = false) Optional<Long> lastId,
+    @GetMapping("")
+    public ResponseEntity<List<PopDto.Response>> findNotExpiredFriendPops(@RequestParam(required = false) Optional<Long> lastId,
                                                                           @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(findPopService.findNotExpiredFriendPops(lastId, Long.valueOf(userDetails.getUsername())));
+    }
+
+    @GetMapping("/{popPk}")
+    public ResponseEntity<PopDetailDto.Response> findDetailPop(@PathVariable Long popPk,
+                                                               @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(findPopService.findPopDetail(popPk, Long.valueOf(userDetails.getUsername())));
     }
 }

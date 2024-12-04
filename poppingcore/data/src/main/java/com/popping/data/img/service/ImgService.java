@@ -3,8 +3,6 @@ package com.popping.data.img.service;
 import com.popping.data.img.entity.Img;
 import com.popping.data.img.repository.ImgRepository;
 import com.popping.data.pop.entity.RePop;
-import com.popping.global.exceptionmessage.ExceptionMessage;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

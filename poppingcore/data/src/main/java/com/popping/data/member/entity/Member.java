@@ -81,4 +81,8 @@ public class Member extends BaseEntity {
         }
         return getPk().toString().concat(".jpeg");
     }
+
+    public boolean isWriter(Long compareMemberPk) {
+        return this.getPk().equals(compareMemberPk);
+    }
 }
