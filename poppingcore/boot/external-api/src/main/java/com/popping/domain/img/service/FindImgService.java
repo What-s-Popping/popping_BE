@@ -2,7 +2,6 @@ package com.popping.domain.img.service;
 
 import com.popping.client.aws.s3.S3ImgPathPrefix;
 import com.popping.client.aws.s3.S3Service;
-import com.popping.domain.img.ImgType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,14 +33,14 @@ public class FindImgService {
     }
 
     public boolean isNotProfileImgSaved(String imgName) {
-        return !s3Service.isImgSaved(ImgType.PROFILE.getS3Path(), imgName);
+        return !s3Service.isImgSaved(S3ImgPathPrefix.PROFILE, imgName);
     }
 
     public boolean isNotPopImgSaved(String imgName) {
-        return !s3Service.isImgSaved(ImgType.POP.getS3Path(), imgName);
+        return !s3Service.isImgSaved(S3ImgPathPrefix.POP, imgName);
     }
 
     public boolean isNotRePopImgSaved(String imgName) {
-        return !s3Service.isImgSaved(ImgType.RE_POP.getS3Path(), imgName);
+        return !s3Service.isImgSaved(S3ImgPathPrefix.RE_POP, imgName);
     }
 }

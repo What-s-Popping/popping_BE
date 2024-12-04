@@ -49,8 +49,4 @@ public class SaveImgService {
                 .presignedUrl(uploadUrl)
                 .build();
     }
-
-    public boolean isExistPostImg(String imgName) {
-        return s3Service.isImgSaved(POST_PATH, imgName);
-    }
 }

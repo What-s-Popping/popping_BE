@@ -17,4 +17,6 @@ public class ImgController {
     public ResponseEntity<?> getS3UploadUrl() {
         return ResponseEntity.ok(saveImgService.generateUploadUrl());
     }
+
+
 }

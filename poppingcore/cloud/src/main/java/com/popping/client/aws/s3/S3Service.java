@@ -58,11 +58,11 @@ public class S3Service {
                 .toString();
     }
 
-    public boolean isImgSaved(String filePath, String imgName) {
+    public boolean isImgSaved(S3ImgPathPrefix imgPathPrefix, String imgName) {
         try {
             s3Client.headObject(HeadObjectRequest.builder()
                     .bucket(bucket)
-                    .key(filePath + imgName)
+                    .key(imgPathPrefix.getPathPrefix() + imgName)
                     .build());
         } catch (Exception e) {
             return false;

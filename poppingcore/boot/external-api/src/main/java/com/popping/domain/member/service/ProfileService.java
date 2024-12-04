@@ -22,7 +22,7 @@ public class ProfileService {
         Member member = memberService.findMemberOp(memberPk).orElseThrow(NoSuchElementException::new);
         String name = member.getName();
         String profileImgUrl = null;
-        if (s3Service.isImgSaved(S3ImgPathPrefix.PROFILE.getPathPrefix(), member.getProfileImgFileName())) {
+        if (s3Service.isImgSaved(S3ImgPathPrefix.PROFILE, member.getProfileImgFileName())) {
             profileImgUrl = s3Service.generateGetPresignedUrl(S3ImgPathPrefix.PROFILE, member.getProfileImgFileName());
         }
 
