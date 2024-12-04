@@ -3,7 +3,7 @@ package com.popping.domain.img.service;
 import com.popping.client.aws.s3.S3ImgPathPrefix;
 import com.popping.client.aws.s3.S3Service;
 import com.popping.data.img.service.ImgService;
-import com.popping.domain.img.dto.PostImgDto;
+import com.popping.domain.img.dto.ImgDto;
 import com.popping.global.exceptionmessage.ExceptionMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,14 +39,29 @@ public class SaveImgService {
         }
     }
 
-    public PostImgDto.Response generateUploadUrl() {
-        String randomImgName = UUID.randomUUID().toString().concat("."+DEFAULT_EXTENSION);
+    public ImgDto.Response generatePopUploadUrl() {
+        String randomImgName = generateImgName();
         String uploadUrl = s3Service.generatePutPresignedUrl(S3ImgPathPrefix.POP, randomImgName);
         imgService.saveImgNameWithoutPost(randomImgName);
 
-        return PostImgDto.Response.builder()
+        return ImgDto.Response.builder()
                 .imgName(randomImgName)
                 .presignedUrl(uploadUrl)
                 .build();
+    }
+
+    public ImgDto.Response generateRePopUploadUrl() {
+        String randomImgName = generateImgName();
+        String uploadUrl = s3Service.generatePutPresignedUrl(S3ImgPathPrefix.RE_POP, randomImgName);
+        imgService.saveImgNameWithoutPost(randomImgName);
+
+        return ImgDto.Response.builder()
+                .imgName(randomImgName)
+                .presignedUrl(uploadUrl)
+                .build();
+    }
+
+    private static String generateImgName() {
+        return UUID.randomUUID().toString().concat("." + DEFAULT_EXTENSION);
     }
 }
