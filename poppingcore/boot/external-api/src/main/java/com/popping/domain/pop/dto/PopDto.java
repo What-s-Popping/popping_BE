@@ -20,19 +20,6 @@ public class PopDto {
         private List<Long> targetMemberList;
         private String contents;
         private String imgName;
-
-        @Override
-        public String toString() {
-            return "Request{" +
-                    "isPrivateProfile=" + isPrivateProfile +
-                    ", isGlobalShare=" + isGlobalShare +
-                    ", chip='" + chip + '\'' +
-                    ", colorChip=" + colorChip +
-                    ", targetMemberList=" + targetMemberList +
-                    ", contents='" + contents + '\'' +
-                    ", imgName='" + imgName + '\'' +
-                    '}';
-        }
     }
 
     @Getter

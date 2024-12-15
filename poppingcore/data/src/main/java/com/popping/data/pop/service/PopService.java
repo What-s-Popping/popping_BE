@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,5 +58,11 @@ public class PopService {
 
     public List<Pop> findNotExpiredPops(List<Long> reportPopPks, List<Member> friends) {
         return popRepository.findNotExpiredFriendPopPks(reportPopPks, friends);
+    }
+
+    public LocalDateTime findTodayLastPrivateProfilePopDate(Long memberPk) {
+        LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0, 0));
+        LocalDateTime endDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(23, 59, 59));
+        return popRepository.findTodayLastPrivateProfilePopDate(memberPk, startDate, endDate);
     }
 }

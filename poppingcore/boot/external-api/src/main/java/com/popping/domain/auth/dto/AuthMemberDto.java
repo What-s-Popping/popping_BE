@@ -38,9 +38,10 @@ public class AuthMemberDto {
         private final boolean isAllowTermThree;
         private final SignUpPlatform signUpPlatform;
         private final OsType osType;
+        private final MultipartFile file;
 
         @Builder
-        public SignUpRequest(String name, String birthDate, String email, String firebaseToken, String extension, boolean isAllowNotify, boolean isAllowTermOne, boolean isAllowTermThree, boolean isAllowTermTwo, String phoneNumber, SignUpPlatform signUpPlatform, OsType osType) {
+        public SignUpRequest(String name, String birthDate, String email, String firebaseToken, String extension, boolean isAllowNotify, boolean isAllowTermOne, boolean isAllowTermThree, boolean isAllowTermTwo, String phoneNumber, SignUpPlatform signUpPlatform, OsType osType, MultipartFile file) {
             this.name = name;
             this.birthDate = birthDate;
             this.email = email;
@@ -53,9 +54,14 @@ public class AuthMemberDto {
             this.phoneNumber = phoneNumber;
             this.signUpPlatform = signUpPlatform;
             this.osType = osType;
+            this.file = file;
         }
 
-        public Member of(MultipartFile img) {
+        public boolean isExistNotAllowPolicies() {
+            return !(isAllowNotify && isAllowTermOne && isAllowTermTwo);
+        }
+
+        public Member of() {
             return Member.builder()
                     .name(name)
                     .email(email)

@@ -17,4 +17,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByPhoneNumber(@Param("phoneNumber") String phoneNum);
     @Query("select m.popCorn from Member m where m.pk = :memberPk")
     Optional<Integer> findPopcorn(@Param("memberPk") Long memberPk);
+    boolean existsByEmailAndSignUpPlatform(String email, SignUpPlatform signUpPlatform);
 }
