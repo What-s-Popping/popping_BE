@@ -7,7 +7,6 @@ import com.popping.data.friendgroup.service.FriendGroupMemberService;
 import com.popping.data.friendgroup.service.FriendGroupService;
 import com.popping.data.member.entity.Member;
 import com.popping.data.pop.entity.Pop;
-import com.popping.data.pop.entity.PopRead;
 import com.popping.data.pop.service.PopReadService;
 import com.popping.data.pop.service.PopService;
 import com.popping.data.report.service.PopReportService;
@@ -21,8 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -54,7 +51,7 @@ public class FindFriendService {
 
         List<Long> reportPopPks = popReportService.findNotExpiredReportPopPks(requesterPk, friends);
         List<Pop> pops = popService.findNotExpiredPops(reportPopPks, friends);
-        List<PopRead> popReads = popReadService.findPopReads(pops, requesterPk);
+        List<Long> popReads = popReadService.findReadPopPks(pops, requesterPk);
 
         return friends.stream()
                 .map(friend -> FriendDto.Response.builder()
@@ -75,18 +72,9 @@ public class FindFriendService {
                 .toList();
     }
 
-    private boolean isRead(Long writerPk, List<Pop> pops, List<PopRead> popReads) {
-        Set<Long> filteredPopPks = pops.stream()
+    private boolean isRead(Long writerPk, List<Pop> pops, List<Long> readPops) {
+        return pops.stream()
                 .filter(pop -> pop.isWriter(writerPk))
-                .map(Pop::getPk)
-                .collect(Collectors.toSet());
-
-        Set<Long> filteredPopReadPks = popReads.stream()
-                .map(PopRead::getPop)
-                .filter(pop -> pop.isWriter(writerPk))
-                .map(Pop::getPk)
-                .collect(Collectors.toSet());
-
-        return filteredPopReadPks.containsAll(filteredPopPks);
+                .allMatch(pop -> readPops.contains(pop.getPk()));
     }
 }

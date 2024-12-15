@@ -10,10 +10,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PopReadRepository extends JpaRepository<PopRead, Long> {
-    @Query("select pr from PopRead pr " +
-            "join fetch pr.pop p " +
+    @Query("select pr.pop.pk from PopRead pr " +
             "where pr.pop in :pops " +
                 "and pr.reader.pk = :readerPk")
-    List<PopRead> findPopRead(@Param("pops") List<Pop> pops, @Param("readerPk") Long readerPk);
+    List<Long> findReadPopPks(@Param("pops") List<Pop> pops, @Param("readerPk") Long readerPk);
     boolean existsByPopAndReader(Pop pop, Member reader);
 }

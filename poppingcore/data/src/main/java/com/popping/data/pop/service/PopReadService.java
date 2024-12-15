@@ -15,8 +15,8 @@ import java.util.List;
 public class PopReadService {
     private final PopReadRepository popReadRepository;
 
-    public List<PopRead> findPopReads(List<Pop> pops, Long readerPk) {
-        return popReadRepository.findPopRead(pops, readerPk);
+    public List<Long> findReadPopPks(List<Pop> pops, Long readerPk) {
+        return popReadRepository.findReadPopPks(pops, readerPk);
     }
 
     @Transactional
