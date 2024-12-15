@@ -1,5 +1,6 @@
 package com.popping.data.pop.repository;
 
+import com.popping.data.member.entity.Member;
 import com.popping.data.pop.entity.Pop;
 import com.popping.data.pop.entity.PopRead;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,5 @@ public interface PopReadRepository extends JpaRepository<PopRead, Long> {
             "where pr.pop in :pops " +
                 "and pr.reader.pk = :readerPk")
     List<PopRead> findPopRead(@Param("pops") List<Pop> pops, @Param("readerPk") Long readerPk);
+    boolean existsByPopAndReader(Pop pop, Member reader);
 }

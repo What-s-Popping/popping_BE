@@ -1,9 +1,12 @@
 package com.popping.domain.pop.service;
 
 import com.popping.data.block.service.BlockMemberService;
+import com.popping.data.member.entity.Member;
+import com.popping.data.member.service.MemberService;
 import com.popping.data.pop.entity.BaseActionState;
 import com.popping.data.pop.entity.Pop;
 import com.popping.data.pop.service.PopActionStateService;
+import com.popping.data.pop.service.PopReadService;
 import com.popping.data.pop.service.PopService;
 import com.popping.data.report.service.PopReportService;
 import com.popping.domain.img.service.FindImgService;
@@ -18,14 +21,16 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class FindPopService {
     private final PopService popService;
     private final FindImgService imgService;
     private final BlockMemberService blockMemberService;
     private final PopReportService popReportService;
     private final PopActionStateService popActionStateService;
+    private final PopReadService popReadService;
+    private final MemberService memberService;
 
+    @Transactional(readOnly = true)
     public List<PopDto.Response> findNotExpiredFriendPops(Optional<Long> lastPk, Long requesterPk) {
         List<Long> blockMemberPks = blockMemberService.findBlockMembers(requesterPk);
         List<Long> reportPopPks = popReportService.findNotExpiredReportPopPks(requesterPk);
@@ -42,8 +47,12 @@ public class FindPopService {
                 .toList();
     }
 
+    @Transactional
     public PopDetailDto.Response findPopDetail(Long popPk, Long requesterPk) {
         Pop pop = popService.findPop(popPk);
+        Member requester = memberService.findMember(requesterPk);
+        popReadService.readPop(pop, requester);
+
         return PopDetailDto.Response.builder()
                 .popId(pop.getPk())
                 .popImgUrl(imgService.generatePopImgDownloadUrl(pop.getImgName()))
