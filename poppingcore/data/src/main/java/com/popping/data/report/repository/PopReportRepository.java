@@ -1,5 +1,6 @@
 package com.popping.data.report.repository;
 
+import com.popping.data.member.entity.Member;
 import com.popping.data.report.entity.PopReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,4 +13,10 @@ public interface PopReportRepository extends JpaRepository<PopReport, Long> {
     @Query("select pr.target.pk from PopReport pr inner join pr.target p " +
             "where pr.reporter.pk = :requesterPk and p.createdAt > (current_timestamp - 1 day) ")
     List<Long> findNotExpiredReportPopPks(@Param("requesterPk") Long requesterPk);
+
+    @Query("select pr.target.pk from PopReport pr inner join pr.target p " +
+            "where pr.reporter.pk = :requesterPk " +
+                "and p.createdAt > (current_timestamp - 1 day) " +
+                "and p.writer in :friends")
+    List<Long> findNotExpiredReportPopPks(@Param("requesterPk") Long requesterPk, @Param("friends") List<Member> friends);
 }

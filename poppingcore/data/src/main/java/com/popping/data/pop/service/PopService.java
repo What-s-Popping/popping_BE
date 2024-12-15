@@ -1,5 +1,6 @@
 package com.popping.data.pop.service;
 
+import com.popping.data.member.entity.Member;
 import com.popping.data.pop.entity.Pop;
 import com.popping.data.pop.repository.PopRepository;
 import com.popping.global.exceptionmessage.ExceptionMessage;
@@ -35,16 +36,25 @@ public class PopService {
         return popRepository.findMyPopNextPage(lastIdx.orElse(null), memberPk, pageRequest);
     }
 
-    public List<Pop> findFriendPops(List<Long> blockMemberPks,
-                                    List<Long> reportPopPks,
-                                    Optional<Long> lastPk,
-                                    Long requesterPk) {
+    public List<Pop> findNotExpiredPops(List<Long> blockMemberPks,
+                                        List<Long> reportPopPks,
+                                        Optional<Long> lastPk,
+                                        Long requesterPk) {
         PageRequest pageRequest = PageRequest.ofSize(MAX_SIZE);
-        return popRepository.findFriendPops(lastPk.orElse(null), requesterPk, reportPopPks, blockMemberPks, pageRequest);
+        return popRepository.findNotExpiredFriendPops(lastPk.orElse(null), requesterPk, reportPopPks, blockMemberPks, pageRequest);
     }
 
     public Pop findPop(Long popPk) {
         return popRepository.findById(popPk)
                 .orElseThrow(() -> new EntityNotFoundException(ExceptionMessage.POP_NOT_FOUND.getMessage()));
+    }
+
+    public List<Member> findNotExpiredFriends(Optional<Long> lastFriendPk, Long requesterPk, List<Long> blockedMemberPks) {
+        PageRequest pageRequest = PageRequest.ofSize(15);
+        return popRepository.findNotExpiredPopFriends(lastFriendPk.orElse(null), requesterPk, blockedMemberPks, pageRequest);
+    }
+
+    public List<Pop> findNotExpiredPops(List<Long> reportPopPks, List<Member> friends) {
+        return popRepository.findNotExpiredFriendPopPks(reportPopPks, friends);
     }
 }

@@ -1,5 +1,6 @@
 package com.popping.data.report.service;
 
+import com.popping.data.member.entity.Member;
 import com.popping.data.report.entity.PopReport;
 import com.popping.data.report.repository.PopReportRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,5 +23,9 @@ public class PopReportService {
 
     public List<Long> findNotExpiredReportPopPks(Long requesterPk) {
         return popReportRepository.findNotExpiredReportPopPks(requesterPk);
+    }
+
+    public List<Long> findNotExpiredReportPopPks(Long requesterPk, List<Member> friends) {
+        return popReportRepository.findNotExpiredReportPopPks(requesterPk, friends);
     }
 }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.popping.data.pop.chip.ColorChip;
 import com.popping.data.pop.emotion.ActionState;
 import com.popping.domain.pop.dto.poptype.PopType;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -7,13 +7,15 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/friends")
 @RequiredArgsConstructor
 public class FriendController {
-
     private final FindFriendService findFriendService;
 
     @GetMapping("/sharable")
@@ -24,5 +26,11 @@ public class FriendController {
     @GetMapping("/existence")
     public ResponseEntity<?> getFriendExistence(@AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(findFriendService.getFriendExistence(Long.valueOf(userDetails.getUsername())));
+    }
+
+    @GetMapping("/pops")
+    public ResponseEntity<?> getNotExpiredPopFriends(@RequestParam Optional<Long> lastFriendPk,
+                                                     @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(findFriendService.findNotExpiredPopFriends(lastFriendPk, Long.valueOf(userDetails.getUsername())));
     }
 }

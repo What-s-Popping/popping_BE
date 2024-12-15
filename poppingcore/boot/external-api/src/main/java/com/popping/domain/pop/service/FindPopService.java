@@ -29,7 +29,7 @@ public class FindPopService {
     public List<PopDto.Response> findNotExpiredFriendPops(Optional<Long> lastPk, Long requesterPk) {
         List<Long> blockMemberPks = blockMemberService.findBlockMembers(requesterPk);
         List<Long> reportPopPks = popReportService.findNotExpiredReportPopPks(requesterPk);
-        return popService.findFriendPops(blockMemberPks, reportPopPks, lastPk, requesterPk).stream()
+        return popService.findNotExpiredPops(blockMemberPks, reportPopPks, lastPk, requesterPk).stream()
                 .map(pop -> PopDto.Response.builder()
                         .id(pop.getPk())
                         .nickname(pop.getWriter().getName())
