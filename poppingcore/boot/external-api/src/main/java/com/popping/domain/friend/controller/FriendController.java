@@ -29,8 +29,8 @@ public class FriendController {
     }
 
     @GetMapping("/pops")
-    public ResponseEntity<?> getNotExpiredPopFriends(@RequestParam Optional<Long> lastFriendPk,
+    public ResponseEntity<?> getNotExpiredPopFriends(@RequestParam Optional<Long> lastFriendId,
                                                      @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(findFriendService.findNotExpiredPopFriends(lastFriendPk, Long.valueOf(userDetails.getUsername())));
+        return ResponseEntity.ok(findFriendService.findNotExpiredPopFriends(lastFriendId, Long.valueOf(userDetails.getUsername())));
     }
 }
