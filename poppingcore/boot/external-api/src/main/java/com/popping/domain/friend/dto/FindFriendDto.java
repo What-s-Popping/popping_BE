@@ -3,7 +3,6 @@ package com.popping.domain.friend.dto;
 import com.popping.data.friendgroup.entity.FriendGroupMember;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 

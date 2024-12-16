@@ -1,6 +1,7 @@
 package com.popping.data.img.entity;
 
-import com.popping.data.post.entity.Pop;
+import com.popping.data.pop.entity.Pop;
+import com.popping.data.pop.entity.RePop;
 import com.popping.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -20,9 +21,14 @@ public class Img extends BaseEntity {
     @JoinColumn(foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Pop pop;
 
+    @OneToOne
+    @JoinColumn(foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private RePop rePop;
+
     @Builder
-    public Img(String imgName, Pop pop) {
+    public Img(String imgName, Pop pop, RePop rePop) {
         this.imgName = imgName;
         this.pop = pop;
+        this.rePop = rePop;
     }
 }

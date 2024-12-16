@@ -28,4 +28,8 @@ public abstract class BaseEntity {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createdAt;
+
+    public void updateCreatedAt() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

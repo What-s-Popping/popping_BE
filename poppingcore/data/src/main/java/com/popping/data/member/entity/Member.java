@@ -12,7 +12,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Collections;
 import java.util.Objects;
 
 @Getter
@@ -81,5 +80,9 @@ public class Member extends BaseEntity {
             throw new RuntimeException("멤버 객체 생성 전이라 pk가 없어 파일이름 생성 불가합니다.");
         }
         return getPk().toString().concat(".jpeg");
+    }
+
+    public boolean isWriter(Long compareMemberPk) {
+        return this.getPk().equals(compareMemberPk);
     }
 }

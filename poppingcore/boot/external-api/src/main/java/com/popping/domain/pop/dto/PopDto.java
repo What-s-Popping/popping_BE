@@ -1,7 +1,9 @@
 package com.popping.domain.pop.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.popping.data.post.chip.ColorChip;
+import com.popping.data.pop.chip.ColorChip;
+import com.popping.domain.pop.dto.poptype.PopType;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
@@ -18,5 +20,13 @@ public class PopDto {
         private List<Long> targetMemberList;
         private String contents;
         private String imgName;
+    }
+
+    @Getter
+    public static class Response extends BasePopDto{
+        @Builder
+        public Response(Long id, String chip, String nickname, String profileImgUrl, String popImgUrl, ColorChip colorChip, String contents) {
+            super(id, chip, nickname, profileImgUrl, popImgUrl, colorChip, contents, PopType.POP);
+        }
     }
 }

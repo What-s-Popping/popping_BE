@@ -2,12 +2,12 @@ package com.popping.domain.pop.service;
 
 import com.popping.data.member.entity.Member;
 import com.popping.data.member.service.MemberService;
-import com.popping.data.post.entity.Pop;
-import com.popping.data.post.entity.SharedGroup;
-import com.popping.data.post.entity.SharedGroupMember;
-import com.popping.data.post.service.PopService;
-import com.popping.data.post.service.SharedGroupMemberService;
-import com.popping.data.post.service.SharedGroupService;
+import com.popping.data.pop.entity.Pop;
+import com.popping.data.pop.entity.SharedGroup;
+import com.popping.data.pop.entity.SharedGroupMember;
+import com.popping.data.pop.service.PopService;
+import com.popping.data.pop.service.SharedGroupMemberService;
+import com.popping.data.pop.service.SharedGroupService;
 import com.popping.domain.pop.dto.PopDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class SavePopService {
 
     @Transactional
     public void savePop(PopDto.Request request, Long memberPk) {
-        Member member = memberService.findMember(memberPk).orElseThrow(NoSuchElementException::new);
+        Member member = memberService.findMemberOp(memberPk).orElseThrow(NoSuchElementException::new);
         if (request.isGlobalShare()) {
             popService.save(Pop.builder()
                     .isPrivateProfile(request.isPrivateProfile())
