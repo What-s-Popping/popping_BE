@@ -13,7 +13,7 @@ public interface RePopRepository extends JpaRepository<RePop,Long> {
             "join fetch rp.writer " +
             "where (:lastPk is null or rp.pk < :lastPk) " +
                 "and rp.targetMember.pk = :requesterPk " +
-                "and rp.createdAt > (current_timestamp - 1 day) " +
+//                "and rp.createdAt > (current_timestamp - 1 day) " + todo 실제 배포때는 주석 해제
                 "and rp.writer.pk not in :blockMemberPks " +
                 "and rp.pk not in :reportRePopPks " +
             "order by rp.pk desc")

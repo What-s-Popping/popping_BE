@@ -4,9 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.popping.data.member.entity.Member;
 import com.popping.data.member.entity.PolicyTerm;
 import com.popping.data.member.entity.ostype.OsType;
+import com.popping.data.member.entity.role.Role;
 import com.popping.data.member.entity.signupplatform.SignUpPlatform;
+import com.popping.domain.member.dto.MemberInfoDto;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -114,14 +120,58 @@ public class AuthMemberDto {
         private TokenDto.Tokens tokens;
         @JsonProperty(value = "isRegistered")
         private boolean isRegistered;
+        private MemberInfo memberInfo;
 
         @Builder
-        public SignInResponse(boolean isRegistered, TokenDto.Tokens tokens) {
+        public SignInResponse(boolean isRegistered, TokenDto.Tokens tokens, Member member) {
             this.isRegistered = isRegistered;
             this.tokens = tokens;
+            this.memberInfo = isRegistered ? new MemberInfo(member) : null;
+        }
+
+        public static SignInResponse of(boolean isRegistered) {
+            return SignInResponse.builder()
+                    .isRegistered(isRegistered)
+                    .tokens(TokenDto.Tokens.builder().build())
+                    .build();
+        }
+
+        public static SignInResponse of(boolean isRegistered, TokenDto.Tokens tokens, Member member) {
+            return SignInResponse.builder()
+                    .isRegistered(isRegistered)
+                    .tokens(tokens)
+                    .member(member)
+                    .build();
+        }
+
+
+
+        @Getter
+        @Setter
+        private static class MemberInfo {
+            private String name;
+            private String email;
+            private String phoneNumber;
+            private String birthDate;
+            private String firebaseToken;
+            @JsonProperty(value = "isAllowNotify")
+            private boolean isAllowNotify;
+            private SignUpPlatform signUpPlatform;
+            private Role role;
+            private OsType osType;
+
+            private MemberInfo(Member member) {
+                this.name = member.getName();
+                this.email = member.getEmail();
+                this.phoneNumber = member.getPhoneNumber();
+                this.birthDate = member.getBirthDate();
+                this.firebaseToken = member.getFirebaseToken();
+                this.signUpPlatform = member.getSignUpPlatform();
+                this.role = member.getRole();
+                this.osType = member.getOsType();
+            }
         }
     }
-
 
     @Getter
     @Setter

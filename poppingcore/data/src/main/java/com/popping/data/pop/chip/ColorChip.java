@@ -1,10 +1,10 @@
 package com.popping.data.pop.chip;
 
 public enum ColorChip {
-    WHILE_BLACK,
-    GRAY_WHILE,
+    WHITE_BLACK,
+    GRAY_WHITE,
     YELLOW_BLACK,
-    WHILE_PURPLE,
+    WHITE_PURPLE,
     WHITE_ORANGE,
     WHITE_BLUE,
     WHITE_PINK
