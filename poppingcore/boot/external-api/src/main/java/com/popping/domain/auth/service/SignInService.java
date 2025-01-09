@@ -21,13 +21,13 @@ public class SignInService {
         Optional<Member> requesterOp = memberService.findMember(signInRequestDto.getEmail(), signInRequestDto.getSignUpPlatform());
 
         if (requesterOp.isEmpty()) {
-            return AuthMemberDto.SignInResponse.builder().isRegistered(false).tokens(TokenDto.Tokens.builder().build()).build();
+            return AuthMemberDto.SignInResponse.of(false);
         }
 
         Member requester = requesterOp.get();
         TokenDto.Tokens tokens = tokenService.createTokens(requester.getPk(), requester.getRole());
         requester.updateRefreshToken(tokens.getRefreshToken().getToken());
-        return AuthMemberDto.SignInResponse.builder().isRegistered(true).tokens(tokens).build();
+        return AuthMemberDto.SignInResponse.of(true, tokens, requester);
     }
 
     public AuthMemberDto.SignInRequiredResponse verifySignInRequired(String authorizationHeaderValue) {

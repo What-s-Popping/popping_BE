@@ -51,7 +51,7 @@ public interface PopRepository extends JpaRepository<Pop,Long> {
                 "left join FriendGroupMember fgm on p.sharedGroup = fgm.friendGroup " +
             "where (sgm.member.pk = :requesterPk or fgm.member.pk = :requesterPk) " +
                 "and (:lastFriendPk is null or p.writer.pk < :lastFriendPk) " +
-                "and p.createdAt > (current_timestamp - 1 day) " +
+//                "and p.createdAt > (current_timestamp - 1 day) " + todo 실제 배포때는 주석 해제
                 "and p.writer.pk not in :blockMemberPks " +
             "order by p.writer.pk desc")
     List<Member> findNotExpiredPopFriends(@Param("lastFriendPk") Long lastFriendPk,
@@ -61,9 +61,9 @@ public interface PopRepository extends JpaRepository<Pop,Long> {
 
     @Query("select p from Pop p " +
             "join fetch p.writer " +
-            "where p.createdAt > (current_timestamp - 1 day) " +
-                "and p.writer in :friends " +
+            "where p.writer in :friends " +
                 "and p.pk not in :reportPopPks " +
+//                "and p.createdAt > (current_timestamp - 1 day) " + todo 실제 배포때는 주석 해제
             "order by p.pk desc")
     List<Pop> findNotExpiredFriendPopPks(@Param("reportPopPks") List<Long> reportPopPks,
                                          @Param("friends") List<Member> friends);
