@@ -36,7 +36,7 @@ public interface PopRepository extends JpaRepository<Pop,Long> {
                 "left join FriendGroupMember fgm on p.sharedGroup = fgm.friendGroup " +
             "where (sgm.member.pk = :requesterPk or fgm.member.pk = :requesterPk) " +
                 "and (:lastPk is null or p.pk < :lastPk) " +
-                "and p.createdAt > (current_timestamp - 1 day) " +
+//                "and p.createdAt > (current_timestamp - 1 day) " + todo 실제 배포때는 주석 해제
                 "and p.writer.pk not in :blockMemberPks " +
                 "and p.pk not in :reportPopPks " +
             "order by p.pk desc")
