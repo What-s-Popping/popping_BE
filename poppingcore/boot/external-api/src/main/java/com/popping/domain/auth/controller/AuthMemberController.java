@@ -21,7 +21,7 @@ public class AuthMemberController {
     private static final String AUTHORIZATION = "Authorization";
 
     @PostMapping("/sign-up")
-    public ResponseEntity<AuthMemberDto.SignUpResponse> signUp(@RequestParam @Valid AuthMemberDto.SignUpRequest signUpRequestDto) {
+    public ResponseEntity<AuthMemberDto.SignUpResponse> signUp(@Valid AuthMemberDto.SignUpRequest signUpRequestDto) {
         return ResponseEntity.created(URI.create(""))
                 .body(signUpService.signUp(signUpRequestDto));
     }
