@@ -44,4 +44,10 @@ public class PopController {
                                                                @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(findPopService.findPopDetail(popPk, Long.valueOf(userDetails.getUsername())));
     }
+
+    @GetMapping("/{popPk}/action")
+    public ResponseEntity<?> findPopActionMembers(@PathVariable Long popPk,
+                                                  @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(findPopService.findPopActionMembers(popPk, Long.valueOf(userDetails.getUsername())));
+    }
 }

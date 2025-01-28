@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PopActionStateRepository extends JpaRepository<PopActionState, Long> {
@@ -33,4 +34,8 @@ public interface PopActionStateRepository extends JpaRepository<PopActionState, 
                 "and pas.actionState != 'SHARED' " +
                 "and pas.actionState != 'IMG_SAVED'")
     Optional<PopActionState> findEmotionState(@Param("memberPk") Long memberPk, @Param("popPk") Long popPk);
+
+    @Query("select p from PopActionState p " +
+            "where p.pop.pk = :popPk")
+    List<PopActionState> findActions(@Param("popPk") Long popPk);
 }
