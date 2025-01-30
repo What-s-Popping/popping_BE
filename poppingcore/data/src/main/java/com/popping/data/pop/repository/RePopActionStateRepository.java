@@ -1,10 +1,12 @@
 package com.popping.data.pop.repository;
 
+import com.popping.data.pop.entity.PopActionState;
 import com.popping.data.pop.entity.RePopActionState;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface RePopActionStateRepository extends JpaRepository<RePopActionState, Long> {
@@ -33,4 +35,8 @@ public interface RePopActionStateRepository extends JpaRepository<RePopActionSta
                 "and rpas.actionState != 'SHARED' " +
                 "and rpas.actionState != 'IMG_SAVED'")
     Optional<RePopActionState> findEmotionState(@Param("memberPk") Long memberPk, @Param("popPk") Long popPk);
+
+    @Query("select r from RePopActionState r " +
+            "where r.rePop.pk = :rePopPk")
+    List<RePopActionState> findActions(@Param("rePopPk") Long rePopPk);
 }

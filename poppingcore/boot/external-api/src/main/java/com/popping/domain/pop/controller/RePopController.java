@@ -40,4 +40,10 @@ public class RePopController {
                                                                  @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(findRePopService.findRePopDetail(rePopPk, Long.valueOf(userDetails.getUsername())));
     }
+
+    @GetMapping("/{rePopPk}/action")
+    public ResponseEntity<?> findPopActionMembers(@PathVariable Long rePopPk,
+                                                  @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(findRePopService.findRePopActionMembers(rePopPk, Long.valueOf(userDetails.getUsername())));
+    }
 }
