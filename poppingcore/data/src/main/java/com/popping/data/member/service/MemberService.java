@@ -1,5 +1,6 @@
 package com.popping.data.member.service;
 
+import com.popping.data.friendgroup.entity.FriendGroup;
 import com.popping.data.member.entity.Member;
 import com.popping.data.member.entity.signupplatform.SignUpPlatform;
 import com.popping.data.member.repository.MemberRepository;
@@ -7,6 +8,7 @@ import com.popping.global.exceptionmessage.ExceptionMessage;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -53,5 +55,10 @@ public class MemberService {
 
     public boolean isSignUpMember(String email, SignUpPlatform signUpPlatform) {
         return memberRepository.existsByEmailAndSignUpPlatform(email, signUpPlatform);
+    }
+
+    @Transactional
+    public void updateFriendGroup(Long memberPk, FriendGroup friendGroup) {
+        memberRepository.updateAllFriendGroup(friendGroup, memberPk);
     }
 }

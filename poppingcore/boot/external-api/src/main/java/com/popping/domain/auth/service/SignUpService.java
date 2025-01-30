@@ -34,13 +34,18 @@ public class SignUpService {
         TokenDto.Tokens tokens = tokenService.createTokens(requester.getPk(), requester.getRole());
         requester.updateRefreshToken(tokens.getRefreshToken().getToken());
         policyTermService.savePolicyTerm(requestDto.of(requester));
-        friendGroupService.saveFriendGroup(FriendGroup.builder().groupOwner(requester).build());
+        saveRequesterFriendGroup(requester);
 
         if (isKakaoProfileImgSaveCond(requestDto.getSignUpPlatform(), requestDto.getFile())) {
             saveImgService.saveProfileImg(requester.getPk().toString(), requestDto.getExtension(), requestDto.getFile());
         }
 
         return new AuthMemberDto.SignUpResponse(tokens);
+    }
+
+    private void saveRequesterFriendGroup(Member requester) {
+        FriendGroup friendGroup = friendGroupService.saveFriendGroup(FriendGroup.builder().groupOwner(requester).build());
+        memberService.updateFriendGroup(requester.getPk(), friendGroup);
     }
 
     private void verifySignUpCond(AuthMemberDto.SignUpRequest requestDto) {
