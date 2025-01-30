@@ -96,8 +96,10 @@ public class FindRePopService {
                                 .filter(popActionState -> !popActionState
                                         .getActionState()
                                         .isNotEmotionState())
-                                .toList().get(0)
-                                .getActionState())
+                                .findFirst()
+                                .map(BaseActionState::getActionState)
+                                .orElse(null)
+                        )
                         .build()
                 ).toList();
         return PopActionMemberDto.Response.builder().memberInfos(memberInfos).build();
