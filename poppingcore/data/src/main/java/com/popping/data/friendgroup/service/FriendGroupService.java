@@ -12,8 +12,8 @@ import java.util.NoSuchElementException;
 public class FriendGroupService {
     private final FriendGroupRepository friendGroupRepository;
 
-    public void saveFriendGroup(FriendGroup friendGroup) {
-        friendGroupRepository.save(friendGroup);
+    public FriendGroup saveFriendGroup(FriendGroup friendGroup) {
+        return friendGroupRepository.save(friendGroup);
     }
     public FriendGroup findFriendGroup(Long ownerPk) {
         return friendGroupRepository.findFriendGroup(ownerPk).orElseThrow(NoSuchElementException::new);
