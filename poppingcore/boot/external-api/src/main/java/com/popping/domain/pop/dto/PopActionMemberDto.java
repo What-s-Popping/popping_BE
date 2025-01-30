@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.popping.data.pop.emotion.ActionState;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -20,6 +21,8 @@ public class PopActionMemberDto {
         }
     }
 
+    @Getter
+    @Setter
     public static class MemberInfo {
         Long memberId;
         String memberName;

@@ -36,6 +36,7 @@ public interface PopActionStateRepository extends JpaRepository<PopActionState, 
     Optional<PopActionState> findEmotionState(@Param("memberPk") Long memberPk, @Param("popPk") Long popPk);
 
     @Query("select p from PopActionState p " +
+            "join fetch p.member " +
             "where p.pop.pk = :popPk")
     List<PopActionState> findActions(@Param("popPk") Long popPk);
 }
