@@ -19,6 +19,7 @@ public class MyPopService {
     public List<PopDto.Response> findMyPopNextPage(Optional<Long> lastIdx, Long memberPk) {
         return popService.findMyPopNextPage(lastIdx, memberPk)
                 .stream().map(pop -> PopDto.Response.builder()
+                        .popId(pop.getPk())
                         .createAt(pop.getCreatedAt())
                         .content(pop.getContents())
                         .imgUrl(pop.getColorChip()==null ?
