@@ -11,9 +11,9 @@ public class SaveFriendContactDto {
     public static class Request {
         private List<String> phoneNumbers;
 
-        public List<String> filter() {
+        public List<String> filter(String ownerPhoneNumber) {
             return phoneNumbers.stream()
-                    .filter(phoneNum -> phoneNum != null && !phoneNum.isBlank())
+                    .filter(phoneNum -> phoneNum != null && !phoneNum.isBlank() && !phoneNum.equals(ownerPhoneNumber))
                     .distinct()
                     .toList();
         }

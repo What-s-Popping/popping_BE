@@ -15,12 +15,12 @@ import java.util.List;
 public class SaveFriendContactService {
     private final FriendContactService friendContactService;
     private final MemberService memberService;
-    private static final int CONTACT_BATCH_SIZE = 1;
+    private static final int CONTACT_BATCH_SIZE = 100;
 
     @Transactional
     public void saveFriendContacts(Long ownerPk, SaveFriendContactDto.Request requestDto) {
-        List<String> filteredPhoneNumbers = requestDto.filter();
         Member owner = memberService.findMember(ownerPk);
+        List<String> filteredPhoneNumbers = requestDto.filter(owner.getPhoneNumber());
 
         for (int i = 0; i < filteredPhoneNumbers.size(); i += CONTACT_BATCH_SIZE) {
             List<String> subPhoneNumbers = filteredPhoneNumbers.subList(i, Math.min(i + CONTACT_BATCH_SIZE, filteredPhoneNumbers.size()));
