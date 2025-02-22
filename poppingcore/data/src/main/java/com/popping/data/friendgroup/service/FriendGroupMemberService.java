@@ -44,4 +44,8 @@ public class FriendGroupMemberService {
     private boolean isAlreadySaved(Long groupOwnerPk, Long groupMemberPk) {
         return friendGroupMemberRepository.findFriendGroupMember(groupOwnerPk, groupMemberPk).isEmpty();
     }
+
+    public List<Member> findFriendGroupMembers(FriendGroup friendGroup) {
+        return friendGroupMemberRepository.findFriendGroupMembers(friendGroup);
+    }
 }

@@ -6,10 +6,14 @@ import com.popping.data.member.service.MemberService;
 import com.popping.data.pop.entity.RePop;
 import com.popping.data.pop.service.RePopService;
 import com.popping.domain.img.service.FindImgService;
+import com.popping.domain.notification.dto.FCMDto;
+import com.popping.domain.notification.fcmtype.NotificationType;
+import com.popping.domain.notification.service.FCMEvent;
 import com.popping.domain.pop.dto.RePopDto;
 import com.popping.domain.pop.dto.poptype.PopType;
 import com.popping.global.exceptionmessage.ExceptionMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +28,7 @@ public class SaveRePopService {
     private final SavePopActionStateService savePopActionStateService;
     private final SaveRePopActionStateService saveRePopActionStateService;
     private final ImgService imgService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public void save(Long writerPk, RePopDto.Request requestDto) {
@@ -41,6 +46,17 @@ public class SaveRePopService {
         if (requestDto.isExistImg()) {
             imgService.updateRePop(rePop, requestDto.getImgName());
         }
+
+        // todo firebase Project 생성 시 주석 풀기
+//        if (targetMember.isAllowPopNotify()) {
+//            eventPublisher.publishEvent(
+//                    FCMDto.FCMEvent.builder()
+//                            .requesterNickname(writer.getName())
+//                            .notificationType(NotificationType.RE_POP)
+//                            .targetFcmToken(targetMember.getFirebaseToken())
+//                            .build()
+//            );
+//        }
     }
 
     private void saveActionState(Long writerPk, PopType targetPopType, Long targetPopId) {

@@ -38,6 +38,9 @@ public class Member extends BaseEntity {
     @Column(name = "IS_ALLOW_NOTIFY")
     private boolean isAllowNotify;
 
+    @Column(name = "IS_ALLOW_FRIEND_POP_NOTIFY")
+    private boolean isAllowFriendPopNotify;
+
     @Enumerated(value = EnumType.STRING)
     private SignUpPlatform signUpPlatform;
     @Enumerated(value = EnumType.STRING)
@@ -58,6 +61,7 @@ public class Member extends BaseEntity {
         this.email = email;
         this.firebaseToken = firebaseToken;
         this.isAllowNotify = isAllowNotify;
+        this.isAllowFriendPopNotify = true;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.refreshToken = refreshToken;
@@ -84,5 +88,21 @@ public class Member extends BaseEntity {
 
     public boolean isWriter(Long compareMemberPk) {
         return this.getPk().equals(compareMemberPk);
+    }
+
+    public boolean isAllowPopNotify() {
+        return isAllowNotify && isAllowFriendPopNotify;
+    }
+
+    public boolean isAllowFriendRequestNotify() {
+        return isAllowNotify;
+    }
+
+    public void updateAllowNotify(boolean allowNotify) {
+        this.isAllowNotify = allowNotify;
+    }
+
+    public void updateAllowPopNotify(boolean allowPopNotify) {
+        this.isAllowFriendPopNotify = allowPopNotify;
     }
 }

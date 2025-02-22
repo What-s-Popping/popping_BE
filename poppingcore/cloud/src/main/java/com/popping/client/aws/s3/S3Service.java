@@ -17,7 +17,7 @@ import java.time.Duration;
 @Service
 @RequiredArgsConstructor
 public class S3Service {
-    @Value("${cloud.aws.s3.bucket}")
+    @Value("${cloud.aws.s3.img.bucket}")
     private String bucket;
 
     private final S3Client s3Client;
