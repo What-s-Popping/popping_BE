@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/popping_BE.iml" filepath="$PROJECT_DIR$/.idea/popping_BE.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/boot/batch/poppingcore.boot.batch.main.iml" filepath="$PROJECT_DIR$/.idea/modules/boot/batch/poppingcore.boot.batch.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/boot/external-api/poppingcore.boot.external-api.main.iml" filepath="$PROJECT_DIR$/.idea/modules/boot/external-api/poppingcore.boot.external-api.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cloud/poppingcore.cloud.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cloud/poppingcore.cloud.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/poppingcore.data.main.iml" filepath="$PROJECT_DIR$/.idea/modules/data/poppingcore.data.main.iml" />
+    </modules>
+  </component>
+</project>

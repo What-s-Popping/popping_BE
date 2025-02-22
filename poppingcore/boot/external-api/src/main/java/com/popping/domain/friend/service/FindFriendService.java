@@ -36,7 +36,7 @@ public class FindFriendService {
     public FindFriendDto.Response getFriendsForSharing(Long memberPk) {
         FriendGroup friendGroup = friendGroupService.findFriendGroup(memberPk);
         List<FriendGroupMember> friendGroupMembers = friendGroupMemberService.findFriendGroupMembersFetchMember(friendGroup);
-        return FindFriendDto.Response.of(friendGroupMembers);
+        return FindFriendDto.Response.fromFriendGroupMember(friendGroupMembers);
     }
 
     public FindFriendExistenceDto.Response getFriendExistence(Long requesterPk) {
