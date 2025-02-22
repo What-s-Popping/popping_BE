@@ -61,6 +61,7 @@ public class Member extends BaseEntity {
         this.email = email;
         this.firebaseToken = firebaseToken;
         this.isAllowNotify = isAllowNotify;
+        this.isAllowFriendPopNotify = true;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.refreshToken = refreshToken;
@@ -95,5 +96,13 @@ public class Member extends BaseEntity {
 
     public boolean isAllowFriendRequestNotify() {
         return isAllowNotify;
+    }
+
+    public void updateAllowNotify(boolean allowNotify) {
+        this.isAllowNotify = allowNotify;
+    }
+
+    public void updateAllowPopNotify(boolean allowPopNotify) {
+        this.isAllowFriendPopNotify = allowPopNotify;
     }
 }
