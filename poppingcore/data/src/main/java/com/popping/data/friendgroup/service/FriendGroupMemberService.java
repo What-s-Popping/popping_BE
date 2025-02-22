@@ -15,6 +15,7 @@ import java.util.List;
 public class FriendGroupMemberService {
     private final FriendGroupMemberRepository friendGroupMemberRepository;
     private final MemberService memberService;
+    private final FriendGroupService friendGroupService;
 
     public List<FriendGroupMember> findFriendGroupMembersFetchMember(FriendGroup friendGroup) {
         return friendGroupMemberRepository.findFriendGroupMembersFetchMember(friendGroup);
@@ -23,6 +24,25 @@ public class FriendGroupMemberService {
     public boolean findFriendExistence(Long requesterPk) {
         Member requester = memberService.findMember(requesterPk);
         return friendGroupMemberRepository.existsByFriendGroup(requester.getAllFriendGroup());
+    }
+
+    public void saveFriendGroupMember(Long groupOwnerPk, Long groupMemberPk) {
+
+        if (!isAlreadySaved(groupOwnerPk, groupMemberPk)) {
+            FriendGroup friendGroup = friendGroupService.findFriendGroup(groupOwnerPk);
+            Member groupMember = memberService.findMember(groupMemberPk);
+
+            FriendGroupMember friendGroupMember = FriendGroupMember.builder()
+                    .friendGroup(friendGroup)
+                    .member(groupMember)
+                    .build();
+
+            friendGroupMemberRepository.save(friendGroupMember);
+        }
+    }
+
+    private boolean isAlreadySaved(Long groupOwnerPk, Long groupMemberPk) {
+        return friendGroupMemberRepository.findFriendGroupMember(groupOwnerPk, groupMemberPk).isEmpty();
     }
 
     public List<String> findFriendGroupMemberFCMTokens(FriendGroup friendGroup) {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.26/8f8cf0372abf564913e9796623aac4c8ea44025a/lombok-1.18.26.jar" />
+        </processorPath>
+        <module name="poppingcore.boot.main" />
+        <module name="poppingcore.cloud.main" />
+        <module name="poppingcore.data.test" />
+        <module name="poppingcore.boot.batch.test" />
+        <module name="poppingcore.data.main" />
+        <module name="poppingcore.boot.external-api.main" />
+        <module name="poppingcore.boot.external-api.test" />
+        <module name="poppingcore.cloud.test" />
+        <module name="poppingcore.boot.test" />
+        <module name="poppingcore.boot.batch.main" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>
