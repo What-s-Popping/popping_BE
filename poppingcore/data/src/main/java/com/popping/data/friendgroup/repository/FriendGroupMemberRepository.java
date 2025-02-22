@@ -11,5 +11,9 @@ import java.util.List;
 public interface FriendGroupMemberRepository extends JpaRepository<FriendGroupMember, String> {
     @Query("select f from FriendGroupMember f join fetch f.member where f.friendGroup = :friendGroup")
     List<FriendGroupMember> findFriendGroupMembersFetchMember(@Param("friendGroup") FriendGroup friendGroup);
+
     boolean existsByFriendGroup (FriendGroup friendGroup);
+
+    @Query("select f.member.firebaseToken from FriendGroupMember f inner join f.member where f.friendGroup = :friendGroup")
+    List<String> findFriendGroupMemberFCMTokens(@Param("friendGroup") FriendGroup friendGroup);
 }

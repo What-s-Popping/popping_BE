@@ -38,6 +38,9 @@ public class Member extends BaseEntity {
     @Column(name = "IS_ALLOW_NOTIFY")
     private boolean isAllowNotify;
 
+    @Column(name = "IS_ALLOW_FRIEND_POP_NOTIFY")
+    private boolean isAllowFriendPopNotify;
+
     @Enumerated(value = EnumType.STRING)
     private SignUpPlatform signUpPlatform;
     @Enumerated(value = EnumType.STRING)

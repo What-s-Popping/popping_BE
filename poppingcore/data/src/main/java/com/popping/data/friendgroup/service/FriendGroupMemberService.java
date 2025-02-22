@@ -24,4 +24,8 @@ public class FriendGroupMemberService {
         Member requester = memberService.findMember(requesterPk);
         return friendGroupMemberRepository.existsByFriendGroup(requester.getAllFriendGroup());
     }
+
+    public List<String> findFriendGroupMemberFCMTokens(FriendGroup friendGroup) {
+        return friendGroupMemberRepository.findFriendGroupMemberFCMTokens(friendGroup);
+    }
 }
