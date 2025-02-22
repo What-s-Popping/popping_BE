@@ -4,7 +4,11 @@ cloud:
     stack:
       auto: false
     s3:
-      bucket: popping-s3
+      img:
+        bucket: popping-s3
+      fcm:
+        bucket: popping-fcm
+        sdk: ${FCM_SDK}
       credentials:
         accessKey: ${accessKey}
         secretKey: ${secretKey}

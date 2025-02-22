@@ -2,6 +2,7 @@ package com.popping.data.friendgroup.repository;
 
 import com.popping.data.friendgroup.entity.FriendGroup;
 import com.popping.data.friendgroup.entity.FriendGroupMember;
+import com.popping.data.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,6 +20,6 @@ public interface FriendGroupMemberRepository extends JpaRepository<FriendGroupMe
                 "and f.member.pk = :groupMemberPk")
     List<FriendGroupMember> findFriendGroupMember(@Param("groupOwnerPk") Long groupOwnerPk, @Param("groupMemberPk") Long groupMemberPk);
 
-    @Query("select f.member.firebaseToken from FriendGroupMember f inner join f.member where f.friendGroup = :friendGroup")
-    List<String> findFriendGroupMemberFCMTokens(@Param("friendGroup") FriendGroup friendGroup);
+    @Query("select f.member from FriendGroupMember f inner join f.member where f.friendGroup = :friendGroup")
+    List<Member> findFriendGroupMembers(@Param("friendGroup") FriendGroup friendGroup);
 }

@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -46,12 +45,13 @@ public class SavePopService {
                     .sharedGroup(member.getAllFriendGroup())
                     .build());
 
-            eventPublisher.publishEvent(FCMDto.MulticastFCMEvent.builder()
-                    .requesterNickname(member.getName())
-                    .notificationType(NotificationType.POP)
-                    .targetFcmTokens(friendGroupMemberService.findFriendGroupMemberFCMTokens(member.getAllFriendGroup()))
-                    .build()
-            );
+            // todo firebase Project 생성 시 주석 풀기
+//            List<Member> friendGroupMembers = friendGroupMemberService.findFriendGroupMembers(member.getAllFriendGroup());
+//            eventPublisher.publishEvent(FCMDto.MulticastFCMEvent.builder()
+//                    .requesterNickname(member.getName())
+//                    .notificationType(NotificationType.POP)
+//                    .targetFcmTokens(filteredAllowNotifyFCMTokens(friendGroupMembers))
+//            );
         }
 
         if (!request.isGlobalShare()) {
@@ -77,12 +77,20 @@ public class SavePopService {
                     .sharedGroup(sharedGroup)
                     .build());
 
-            eventPublisher.publishEvent(FCMDto.MulticastFCMEvent.builder()
-                    .requesterNickname(member.getName())
-                    .notificationType(NotificationType.POP)
-                    .targetFcmTokens(members.stream().map(Member::getFirebaseToken).toList())
-                    .build()
-            );
+            // todo firebase Project 생성 시 주석 풀기
+//            eventPublisher.publishEvent(FCMDto.MulticastFCMEvent.builder()
+//                    .requesterNickname(member.getName())
+//                    .notificationType(NotificationType.POP)
+//                    .targetFcmTokens(filteredAllowNotifyFCMTokens(members))
+//                    .build()
+//            );
         }
+    }
+
+    private static List<String> filteredAllowNotifyFCMTokens(List<Member> members) {
+        return members.stream()
+                .filter(Member::isAllowPopNotify)
+                .map(Member::getFirebaseToken)
+                .toList();
     }
 }

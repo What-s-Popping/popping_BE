@@ -45,7 +45,7 @@ public class FriendGroupMemberService {
         return friendGroupMemberRepository.findFriendGroupMember(groupOwnerPk, groupMemberPk).isEmpty();
     }
 
-    public List<String> findFriendGroupMemberFCMTokens(FriendGroup friendGroup) {
-        return friendGroupMemberRepository.findFriendGroupMemberFCMTokens(friendGroup);
+    public List<Member> findFriendGroupMembers(FriendGroup friendGroup) {
+        return friendGroupMemberRepository.findFriendGroupMembers(friendGroup);
     }
 }

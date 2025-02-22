@@ -88,4 +88,12 @@ public class Member extends BaseEntity {
     public boolean isWriter(Long compareMemberPk) {
         return this.getPk().equals(compareMemberPk);
     }
+
+    public boolean isAllowPopNotify() {
+        return isAllowNotify && isAllowFriendPopNotify;
+    }
+
+    public boolean isAllowFriendRequestNotify() {
+        return isAllowNotify;
+    }
 }

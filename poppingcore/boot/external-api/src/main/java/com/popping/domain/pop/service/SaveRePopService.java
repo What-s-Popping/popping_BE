@@ -47,13 +47,16 @@ public class SaveRePopService {
             imgService.updateRePop(rePop, requestDto.getImgName());
         }
 
-        eventPublisher.publishEvent(
-                FCMDto.FCMEvent.builder()
-                        .requesterNickname(writer.getName())
-                        .notificationType(NotificationType.RE_POP)
-                        .targetFcmToken(targetMember.getFirebaseToken())
-        );
-
+        // todo firebase Project 생성 시 주석 풀기
+//        if (targetMember.isAllowPopNotify()) {
+//            eventPublisher.publishEvent(
+//                    FCMDto.FCMEvent.builder()
+//                            .requesterNickname(writer.getName())
+//                            .notificationType(NotificationType.RE_POP)
+//                            .targetFcmToken(targetMember.getFirebaseToken())
+//                            .build()
+//            );
+//        }
     }
 
     private void saveActionState(Long writerPk, PopType targetPopType, Long targetPopId) {
