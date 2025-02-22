@@ -61,4 +61,8 @@ public class MemberService {
     public void updateFriendGroup(Long memberPk, FriendGroup friendGroup) {
         memberRepository.updateAllFriendGroup(friendGroup, memberPk);
     }
+
+    public List<Member> findMembersByPhoneNumber(List<String> phoneNumbers) {
+        return memberRepository.findMembers(phoneNumbers);
+    }
 }

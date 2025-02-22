@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
@@ -26,4 +27,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Modifying
     @Query("update Member m set m.allFriendGroup = :friendGroup where m.pk = :memberPk")
     void updateAllFriendGroup(@Param("friendGroup") FriendGroup friendGroup, @Param("memberPk") Long memberPk);
+
+    @Query("select m from Member m where m.phoneNumber in :phoneNumbers")
+    List<Member> findMembers(@Param("phoneNumbers") List<String> phoneNumbers);
 }
