@@ -12,4 +12,9 @@ public interface FriendGroupMemberRepository extends JpaRepository<FriendGroupMe
     @Query("select f from FriendGroupMember f join fetch f.member where f.friendGroup = :friendGroup")
     List<FriendGroupMember> findFriendGroupMembersFetchMember(@Param("friendGroup") FriendGroup friendGroup);
     boolean existsByFriendGroup (FriendGroup friendGroup);
+
+    @Query("select f from FriendGroupMember f " +
+            "where f.friendGroup.groupOwner.pk = :groupOwnerPk " +
+                "and f.member.pk = :groupMemberPk")
+    List<FriendGroupMember> findFriendGroupMember(@Param("groupOwnerPk") Long groupOwnerPk, @Param("groupMemberPk") Long groupMemberPk);
 }
