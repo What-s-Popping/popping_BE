@@ -67,7 +67,7 @@ public class FriendRequestService {
     @Transactional
     public void friendsRequestAccept(Long toMemberPk, Long fromMemberPk) {
         Optional<FriendRequest> friendsRequest = friendRequestRepository.findFriendsRequest(toMemberPk, fromMemberPk);
-        if (friendsRequest.isPresent()) {
+        if (friendsRequest.isPresent()) { //todo 차단되어있으면 차단 풀고 친구 추가
             friendGroupMemberService.saveFriendGroupMember(toMemberPk, fromMemberPk);
             friendRequestRepository.delete(friendsRequest.get());
         }
@@ -105,6 +105,7 @@ public class FriendRequestService {
         }
     }
 
+    @Transactional
     public FriendRequestDto findInvitationInfo(Long key) {
         Shared shared = sharedService.findShared(key);
         String profileImgUrl = s3Service.generateGetPresignedUrl(S3ImgPathPrefix.PROFILE, shared.getSharedMember().getProfileImgFileName());
