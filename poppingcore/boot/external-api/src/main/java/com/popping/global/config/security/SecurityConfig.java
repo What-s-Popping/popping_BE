@@ -34,6 +34,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/tokens").permitAll()
                         .requestMatchers(HttpMethod.POST, "/sms/send").permitAll()
                         .requestMatchers(HttpMethod.POST, "/sms/verify").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/invitations/info/**").permitAll()
                         .anyRequest().authenticated());
 
         httpSecurity
