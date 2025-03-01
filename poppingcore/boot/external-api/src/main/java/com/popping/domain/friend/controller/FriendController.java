@@ -63,7 +63,7 @@ public class FriendController {
     }
 
     @GetMapping("/invitations/info/{key}")
-    public ResponseEntity<FriendRequestDto> getFriendInvitationsInfo(@PathVariable Long key, @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(friendRequestService.findInvitationInfo(Long.valueOf(userDetails.getUsername()), key));
+    public ResponseEntity<FriendRequestDto> getFriendInvitationsInfo(@PathVariable Long key) {
+        return ResponseEntity.ok(friendRequestService.findInvitationInfo(key));
     }
 }

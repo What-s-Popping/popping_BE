@@ -105,12 +105,9 @@ public class FriendRequestService {
         }
     }
 
-    public FriendRequestDto findInvitationInfo(Long requesterPk, Long key) {
+    public FriendRequestDto findInvitationInfo(Long key) {
         Shared shared = sharedService.findShared(key);
-        boolean isBlock = blockMemberService.findBlockMembers(requesterPk)
-                .stream()
-                .anyMatch(block -> block.equals(shared.getSharedMember().getPk()));
         String profileImgUrl = s3Service.generateGetPresignedUrl(S3ImgPathPrefix.PROFILE, shared.getSharedMember().getProfileImgFileName());
-        return FriendRequestDto.of(shared, isBlock, profileImgUrl);
+        return FriendRequestDto.of(shared, profileImgUrl);
     }
 }

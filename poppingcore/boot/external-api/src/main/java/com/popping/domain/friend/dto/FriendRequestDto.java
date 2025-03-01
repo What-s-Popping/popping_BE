@@ -12,8 +12,6 @@ public class FriendRequestDto {
     private final String name;
     private final SharedPlatform platform;
     private final String profileUrl;
-    @JsonProperty(value = "isBlock")
-    private final boolean isBlock;
     private final Long userId;
 
     @Builder(access = AccessLevel.PRIVATE)
@@ -22,12 +20,10 @@ public class FriendRequestDto {
         this.platform = platform;
         this.profileUrl = profileUrl;
         this.userId = userId;
-        this.isBlock = isBlock;
     }
 
-    public static FriendRequestDto of(Shared shared, boolean isBlock, String profileUrl) {
+    public static FriendRequestDto of(Shared shared,String profileUrl) {
         return FriendRequestDto.builder()
-                .isBlock(isBlock)
                 .name(shared.getSharedMember().getName())
                 .platform(shared.getSharedPlatform())
                 .userId(shared.getSharedMember().getPk())
