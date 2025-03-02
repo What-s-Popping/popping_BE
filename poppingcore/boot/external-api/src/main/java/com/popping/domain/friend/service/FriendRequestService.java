@@ -45,6 +45,7 @@ public class FriendRequestService {
         if (friendRequestRepository.findFriendsRequest(toMemberPk, fromMemberPk).isPresent()) {
             return;
         }
+        blockMemberService.deleteBlockMember(fromMemberPk, toMemberPk);
 
         Member fromMember = memberService.findMember(fromMemberPk);
         Member toMember = memberService.findMember(toMemberPk);
@@ -67,7 +68,7 @@ public class FriendRequestService {
     @Transactional
     public void friendsRequestAccept(Long toMemberPk, Long fromMemberPk) {
         Optional<FriendRequest> friendsRequest = friendRequestRepository.findFriendsRequest(toMemberPk, fromMemberPk);
-        if (friendsRequest.isPresent()) { //todo 차단되어있으면 차단 풀고 친구 추가
+        if (friendsRequest.isPresent()) {
             friendGroupMemberService.saveFriendGroupMember(toMemberPk, fromMemberPk);
             friendRequestRepository.delete(friendsRequest.get());
         }

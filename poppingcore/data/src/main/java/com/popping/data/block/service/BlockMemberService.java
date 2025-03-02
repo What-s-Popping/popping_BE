@@ -14,4 +14,12 @@ public class BlockMemberService {
     public List<Long> findBlockMembers(Long requesterPk) {
         return blockMemberRepository.findBlockMemberPks(requesterPk);
     }
+
+    public void deleteBlockMember(Long fromMemberPk, Long toMemberPk) {
+        blockMemberRepository.deleteBlockMember(toMemberPk, fromMemberPk);
+    }
+
+    public boolean isExistBlockedHistory(Long fromMemberPk, Long toMemberPk) {
+        return blockMemberRepository.existsByFromMember_PkAndToMember_Pk(fromMemberPk, toMemberPk);
+    }
 }
