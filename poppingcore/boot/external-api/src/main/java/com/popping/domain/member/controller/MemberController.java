@@ -74,4 +74,11 @@ public class MemberController {
         profileService.updateProfileName(Long.valueOf(userDetails.getUsername()), request);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/profile/name")
+    public ResponseEntity<?> getMemberName(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(
+                profileService.findName(Long.valueOf(userDetails.getUsername()))
+        );
+    }
 }
