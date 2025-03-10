@@ -1,4 +1,4 @@
-package com.popping.domain.block;
+package com.popping.domain.block.service;
 
 import com.popping.data.block.service.BlockMemberService;
 import com.popping.data.member.entity.Member;
