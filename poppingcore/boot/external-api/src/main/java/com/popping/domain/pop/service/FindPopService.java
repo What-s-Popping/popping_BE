@@ -44,8 +44,8 @@ public class FindPopService {
         return popService.findNotExpiredPops(blockMemberPks, reportPopPks, lastPk, requesterPk).stream()
                 .map(pop -> PopDto.Response.builder()
                         .id(pop.getPk())
-                        .nickname(pop.getWriter().getName())
-                        .profileImgUrl(imgService.generateProfileImgDownloadUrl(pop.getWriter().getProfileImgFileName()))
+                        .nickname(pop.getWriterName())
+                        .profileImgUrl(imgService.generateProfileImgDownloadUrl(pop.getWriter().getProfileImgFileName(), pop.isPrivateProfile()))
                         .popImgUrl(imgService.generatePopImgDownloadUrl(pop.getImgName()))
                         .chip(pop.getChip())
                         .colorChip(pop.getColorChip())
@@ -72,8 +72,8 @@ public class FindPopService {
                         .orElse(null))
                 .isWriter(pop.getWriter().isWriter(requesterPk))
                 .writerId(pop.getWriter().getPk())
-                .nickname(pop.getWriter().getName())
-                .profileImgUrl(imgService.generateProfileImgDownloadUrl(pop.getWriter().getProfileImgFileName()))
+                .nickname(pop.getWriterName())
+                .profileImgUrl(imgService.generateProfileImgDownloadUrl(pop.getWriter().getProfileImgFileName(), pop.isPrivateProfile()))
                 .build();
     }
 
