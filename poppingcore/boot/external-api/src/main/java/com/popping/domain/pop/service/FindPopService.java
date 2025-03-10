@@ -6,7 +6,6 @@ import com.popping.data.member.service.MemberService;
 import com.popping.data.pop.emotion.ActionState;
 import com.popping.data.pop.entity.BaseActionState;
 import com.popping.data.pop.entity.Pop;
-import com.popping.data.pop.entity.PopActionState;
 import com.popping.data.pop.service.PopActionStateService;
 import com.popping.data.pop.service.PopReadService;
 import com.popping.data.pop.service.PopService;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -39,7 +37,7 @@ public class FindPopService {
 
     @Transactional(readOnly = true)
     public List<PopDto.Response> findNotExpiredFriendPops(Optional<Long> lastPk, Long requesterPk) {
-        List<Long> blockMemberPks = blockMemberService.findBlockMembers(requesterPk);
+        List<Long> blockMemberPks = blockMemberService.findBlockMemberPks(requesterPk);
         List<Long> reportPopPks = popReportService.findNotExpiredReportPopPks(requesterPk);
         return popService.findNotExpiredPops(blockMemberPks, reportPopPks, lastPk, requesterPk).stream()
                 .map(pop -> PopDto.Response.builder()

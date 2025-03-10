@@ -46,7 +46,7 @@ public class FindFriendService {
     }
 
     public List<FriendDto.Response> findNotExpiredPopFriends(Optional<Long> lastFriendPk, Long requesterPk) {
-        List<Long> blockedMemberPks = blockMemberService.findBlockMembers(requesterPk);
+        List<Long> blockedMemberPks = blockMemberService.findBlockMemberPks(requesterPk);
         List<Member> friends = popService.findNotExpiredFriends(lastFriendPk, requesterPk, blockedMemberPks);
 
         List<Long> reportPopPks = popReportService.findNotExpiredReportPopPks(requesterPk, friends);

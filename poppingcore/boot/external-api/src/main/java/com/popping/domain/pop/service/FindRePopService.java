@@ -33,7 +33,7 @@ public class FindRePopService {
     private final ProfileService profileService;
 
     public List<RePopDto.Response> findNotExpiredFriendRePops(Optional<Long> lastPk, Long requesterPk) {
-        List<Long> blockMemberPks = blockMemberService.findBlockMembers(requesterPk);
+        List<Long> blockMemberPks = blockMemberService.findBlockMemberPks(requesterPk);
         List<Long> reportRePopPks = rePopReportService.findNotExpiredReportRePopPks(requesterPk);
         return rePopService.findNotExpiredFriendRePops(blockMemberPks, reportRePopPks, lastPk, requesterPk).stream()
                 .map(rePop -> RePopDto.Response.builder()
