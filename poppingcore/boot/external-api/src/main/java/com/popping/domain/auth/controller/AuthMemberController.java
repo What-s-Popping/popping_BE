@@ -7,8 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 
@@ -34,5 +35,13 @@ public class AuthMemberController {
     @GetMapping("/sign-in/re/status")
     public ResponseEntity<AuthMemberDto.SignInRequiredResponse> verifySignInRequired(HttpServletRequest request) {
         return ResponseEntity.ok(signInService.verifySignInRequired(request.getHeader(AUTHORIZATION)));
+    }
+
+
+    @GetMapping("/sign-in/info")
+    public ResponseEntity<?> getSignInInfo(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(
+                signInService.findMemberSignInInfo(Long.valueOf(userDetails.getUsername()))
+        );
     }
 }
