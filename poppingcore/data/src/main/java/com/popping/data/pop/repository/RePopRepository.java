@@ -22,5 +22,8 @@ public interface RePopRepository extends JpaRepository<RePop,Long> {
                                            @Param("reportRePopPks") List<Long> reportRePopPks,
                                            @Param("blockMemberPks") List<Long> blockMemberPks,
                                            Pageable pageable);
+
+    @Query("select rp from RePop rp where rp.targetMember.pk = :targetMemberPk and rp.writer.pk = :writerPk")
+    List<RePop> findRePops(@Param("targetMemberPk") Long targetMemberPk, @Param("writerPk") Long writerPk);
 }
 

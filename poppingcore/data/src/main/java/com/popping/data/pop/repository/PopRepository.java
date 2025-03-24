@@ -67,5 +67,8 @@ public interface PopRepository extends JpaRepository<Pop,Long> {
             "order by p.pk desc")
     List<Pop> findNotExpiredFriendPopPks(@Param("reportPopPks") List<Long> reportPopPks,
                                          @Param("friends") List<Member> friends);
+
+    @Query("select p from Pop p where p.writer.pk = :memberId")
+    List<Pop> findAllMyPop(@Param("memberId") long memberId);
 }
 

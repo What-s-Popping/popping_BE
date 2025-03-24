@@ -18,4 +18,8 @@ public class SharedGroupMemberService {
     public void saveSharedGroupMembers(List<SharedGroupMember> sharedGroupMembers) {
         sharedGroupMemberRepository.saveAll(sharedGroupMembers);
     }
+
+    public void deleteSharedGroupMember(List<Long> memberAllSharedGroupPk, long requesterPk) {
+        sharedGroupMemberRepository.deleteSharedGroupMember(memberAllSharedGroupPk, requesterPk);
+    }
 }

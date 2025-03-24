@@ -48,4 +48,8 @@ public class FriendGroupMemberService {
     public List<Member> findFriendGroupMembers(FriendGroup friendGroup) {
         return friendGroupMemberRepository.findFriendGroupMembers(friendGroup);
     }
+
+    public void deleteFriendGroupMember(FriendGroup friendGroup, long requesterPk) {
+        friendGroupMemberRepository.deleteFriendGroupMember(friendGroup, requesterPk);
+    }
 }

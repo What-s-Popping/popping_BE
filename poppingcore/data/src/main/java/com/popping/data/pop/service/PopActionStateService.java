@@ -36,4 +36,8 @@ public class PopActionStateService {
     public List<PopActionState> findActions(Long popPk) {
         return popActionStateRepository.findActions(popPk);
     }
+
+    public void deletePopActionState(long popWriter, long actionWriter) {
+        popActionStateRepository.deletePopActionState(popWriter, actionWriter);
+    }
 }

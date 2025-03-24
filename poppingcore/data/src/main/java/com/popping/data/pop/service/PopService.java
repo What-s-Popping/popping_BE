@@ -65,4 +65,8 @@ public class PopService {
         LocalDateTime endDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(23, 59, 59));
         return popRepository.findTodayLastPrivateProfilePopDate(memberPk, startDate, endDate);
     }
+
+    public List<Pop> findAllMyPop(long memberId) {
+        return popRepository.findAllMyPop(memberId);
+    }
 }
