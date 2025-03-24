@@ -2,8 +2,10 @@ package com.popping.data.pop.repository;
 
 import com.popping.data.pop.entity.PopActionState;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,4 +41,9 @@ public interface PopActionStateRepository extends JpaRepository<PopActionState, 
             "join fetch p.member " +
             "where p.pop.pk = :popPk")
     List<PopActionState> findActions(@Param("popPk") Long popPk);
+
+    @Transactional
+    @Modifying
+    @Query("delete from PopActionState p where p.pop.writer.pk = :popWriter and p.member.pk = :actionWriter")
+    void deletePopActionState(@Param("popWriter") long popWriter, @Param("actionWriter") long actionWriter);
 }

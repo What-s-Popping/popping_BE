@@ -31,4 +31,8 @@ public class PopReadService {
                         .reader(reader)
                         .build());
     }
+
+    public void deleteReadPopsHistory(long writerPk, long readerPk) {
+        popReadRepository.deleteReadPopsHistory(writerPk, readerPk);
+    }
 }

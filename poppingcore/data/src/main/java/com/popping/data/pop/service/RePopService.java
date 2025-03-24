@@ -33,4 +33,12 @@ public class RePopService {
     public void save(RePop rePop) {
         rePopRepository.save(rePop);
     }
+
+    public List<RePop> findRePops(Long targetMemberPk, Long writerPk) {
+        return rePopRepository.findRePops(targetMemberPk, writerPk);
+    }
+
+    public void deleteRePops(List<RePop> rePops) {
+        rePopRepository.deleteAllInBatch(rePops);
+    }
 }
