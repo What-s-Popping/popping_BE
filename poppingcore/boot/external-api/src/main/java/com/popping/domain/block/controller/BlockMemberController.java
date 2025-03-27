@@ -28,7 +28,7 @@ public class BlockMemberController {
     }
 
     @GetMapping("/members")
-    public ResponseEntity<List<BlockMemberDto.Response>> findBlockMembers(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<?> findBlockMembers(@AuthenticationPrincipal UserDetails userDetails) {
         List<BlockMemberDto.Response> response = findBlockMemberService.findBlockMembers(Long.valueOf(userDetails.getUsername()));
 
         if (response.isEmpty()) {
@@ -39,7 +39,7 @@ public class BlockMemberController {
     }
 
     @DeleteMapping("/members/{toMemberPk}")
-    public ResponseEntity<?> deleteBlockMember(@PathVariable Long toMemberPk,
+    public ResponseEntity<Void> deleteBlockMember(@PathVariable Long toMemberPk,
                                                @AuthenticationPrincipal UserDetails userDetails) {
         deleteBlockMemberService.deleteBlockMember(Long.valueOf(userDetails.getUsername()), toMemberPk);
 

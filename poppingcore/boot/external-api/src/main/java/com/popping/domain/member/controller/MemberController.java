@@ -80,7 +80,7 @@ public class MemberController {
         );
     }
 
-    @DeleteMapping("/members")
+    @DeleteMapping("")
     public ResponseEntity<Void> withdrawMember(@AuthenticationPrincipal UserDetails userDetails) {
         withdrawMemberService.withdrawMember(Long.valueOf(userDetails.getUsername()));
         return ResponseEntity.noContent().build();
