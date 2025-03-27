@@ -5,8 +5,10 @@ import com.popping.data.pop.entity.Pop;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,14 +52,11 @@ public interface PopRepository extends JpaRepository<Pop,Long> {
                 "left join SharedGroupMember sgm on p.sharedGroup = sgm.sharedGroup " +
                 "left join FriendGroupMember fgm on p.sharedGroup = fgm.friendGroup " +
             "where (sgm.member.pk = :requesterPk or fgm.member.pk = :requesterPk) " +
-                "and (:lastFriendPk is null or p.writer.pk < :lastFriendPk) " +
 //                "and p.createdAt > (current_timestamp - 1 day) " + todo 실제 배포때는 주석 해제
                 "and p.writer.pk not in :blockMemberPks " +
             "order by p.writer.pk desc")
-    List<Member> findNotExpiredPopFriends(@Param("lastFriendPk") Long lastFriendPk,
-                                          @Param("requesterPk") Long requesterPk,
-                                          @Param("blockMemberPks") List<Long> blockMemberPks,
-                                          Pageable pageable);
+    List<Member> findNotExpiredPopFriends(@Param("requesterPk") Long requesterPk,
+                                          @Param("blockMemberPks") List<Long> blockMemberPks);
 
     @Query("select p from Pop p " +
             "join fetch p.writer " +
@@ -67,6 +66,14 @@ public interface PopRepository extends JpaRepository<Pop,Long> {
             "order by p.pk desc")
     List<Pop> findNotExpiredFriendPopPks(@Param("reportPopPks") List<Long> reportPopPks,
                                          @Param("friends") List<Member> friends);
+
+    @Query("select p.sharedGroup.pk from Pop p where p.writer.pk = :memberPk")
+    List<Long> findAllSharedGroupPks(@Param("memberPk") Long memberPk);
+
+    @Modifying
+    @Transactional
+    @Query("delete from Pop p where p.writer.pk = :memberPk")
+    void deletePops(@Param("memberPk") Long memberPk);
 
     @Query("select p from Pop p where p.writer.pk = :memberId")
     List<Pop> findAllMyPop(@Param("memberId") long memberId);

@@ -33,13 +33,13 @@ public class FindRePopService {
     private final ProfileService profileService;
 
     public List<RePopDto.Response> findNotExpiredFriendRePops(Optional<Long> lastPk, Long requesterPk) {
-        List<Long> blockMemberPks = blockMemberService.findBlockMembers(requesterPk);
+        List<Long> blockMemberPks = blockMemberService.findBlockMemberPks(requesterPk);
         List<Long> reportRePopPks = rePopReportService.findNotExpiredReportRePopPks(requesterPk);
         return rePopService.findNotExpiredFriendRePops(blockMemberPks, reportRePopPks, lastPk, requesterPk).stream()
                 .map(rePop -> RePopDto.Response.builder()
                         .id(rePop.getPk())
-                        .nickname(rePop.getWriter().getName())
-                        .profileImgUrl(findImgService.generateProfileImgDownloadUrl(rePop.getWriter().getProfileImgFileName()))
+                        .nickname(rePop.getWriterName())
+                        .profileImgUrl(findImgService.generateProfileImgDownloadUrl(rePop.getWriter().getProfileImgFileName(), rePop.isPrivateProfile()))
                         .popImgUrl(findImgService.generateRePopImgDownloadUrl(rePop.getImgName()))
                         .chip(rePop.getChip())
                         .contents(rePop.getContents())
@@ -62,8 +62,8 @@ public class FindRePopService {
                         .orElse(null))
                 .isWriter(rePop.getWriter().isWriter(requesterPk))
                 .writerId(rePop.getWriter().getPk())
-                .nickname(rePop.getWriter().getName())
-                .profileImgUrl(imgService.generateProfileImgDownloadUrl(rePop.getWriter().getProfileImgFileName()))
+                .nickname(rePop.getWriterName())
+                .profileImgUrl(imgService.generateProfileImgDownloadUrl(rePop.getWriter().getProfileImgFileName(), rePop.isPrivateProfile()))
                 .build();
     }
 

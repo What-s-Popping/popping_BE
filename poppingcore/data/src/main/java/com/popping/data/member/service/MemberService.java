@@ -65,4 +65,14 @@ public class MemberService {
     public List<Member> findMembersByPhoneNumber(List<String> phoneNumbers) {
         return memberRepository.findMembers(phoneNumbers);
     }
+
+    public String findMemberName(Long memberPk) {
+        return memberRepository.findMemberName(memberPk)
+                .orElseThrow(() -> new EntityNotFoundException(ExceptionMessage.MEMBER_NOT_FOUND.getMessage()));
+    }
+
+    @Transactional
+    public void deleteMember(Long memberPk) {
+        memberRepository.deleteById(memberPk);
+    }
 }

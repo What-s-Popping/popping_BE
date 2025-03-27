@@ -222,4 +222,9 @@ public class FriendRequestService {
         customFriendGroupMemberService.deleteCustomFriendGroupMember(memberCustomFriendGroup, requesterPk);
         customFriendGroupMemberService.deleteCustomFriendGroupMember(requesterCustomFriendGroup, memberId);
     }
+
+    @Transactional
+    public void deleteAllAssociatedMember(Long memberPk) {
+        friendRequestRepository.deleteAllAssociatedMember(memberPk);
+    }
 }

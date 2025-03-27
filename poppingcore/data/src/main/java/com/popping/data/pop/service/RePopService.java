@@ -7,6 +7,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,11 @@ public class RePopService {
 
     public void save(RePop rePop) {
         rePopRepository.save(rePop);
+    }
+
+    @Transactional
+    public void deleteAllAssociatedMember(Long memberPk) {
+        rePopRepository.deleteAllAssociatedMember(memberPk);
     }
 
     public List<RePop> findRePops(Long targetMemberPk, Long writerPk) {

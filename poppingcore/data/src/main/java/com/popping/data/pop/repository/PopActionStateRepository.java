@@ -42,6 +42,11 @@ public interface PopActionStateRepository extends JpaRepository<PopActionState, 
             "where p.pop.pk = :popPk")
     List<PopActionState> findActions(@Param("popPk") Long popPk);
 
+    @Modifying
+    @Transactional
+    @Query("delete from PopActionState pas where pas.member.pk = :memberPk or pas.pop.writer.pk = :memberPk")
+    void deleteAllAssociatedMember(@Param("memberPk") Long memberPk);
+
     @Transactional
     @Modifying
     @Query("delete from PopActionState p where p.pop.writer.pk = :popWriter and p.member.pk = :actionWriter")

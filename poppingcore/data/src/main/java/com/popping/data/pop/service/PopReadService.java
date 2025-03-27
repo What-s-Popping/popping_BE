@@ -32,6 +32,12 @@ public class PopReadService {
                         .build());
     }
 
+    @Transactional
+    public void deleteAllAssociatedMember(Long memberPk) {
+        popReadRepository.deleteAllAssociatedMember(memberPk);
+    }
+
+
     public void deleteReadPopsHistory(long writerPk, long readerPk) {
         popReadRepository.deleteReadPopsHistory(writerPk, readerPk);
     }

@@ -4,6 +4,7 @@ import com.popping.data.member.entity.Member;
 import com.popping.data.member.service.MemberService;
 import com.popping.domain.auth.dto.AuthMemberDto;
 import com.popping.domain.auth.dto.TokenDto;
+import com.popping.domain.member.dto.MemberSignInInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +44,12 @@ public class SignInService {
         return AuthMemberDto.SignInRequiredResponse.builder()
                 .isSignInRequired(false)
                 .accessToken(accessToken)
+                .build();
+    }
+
+    public MemberSignInInfoDto.Response findMemberSignInInfo(Long memberPk) {
+        return MemberSignInInfoDto.Response.builder()
+                .requester(memberService.findMember(memberPk))
                 .build();
     }
 }

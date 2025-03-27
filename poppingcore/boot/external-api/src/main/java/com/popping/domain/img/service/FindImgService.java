@@ -24,6 +24,10 @@ public class FindImgService {
         return generateDownloadUrl(S3ImgPathPrefix.PROFILE, imgName);
     }
 
+    public String generateProfileImgDownloadUrl(String imgName, boolean isPrivateProfile) {
+        return isPrivateProfile ? null : generateDownloadUrl(S3ImgPathPrefix.PROFILE, imgName);
+    }
+
     private String generateDownloadUrl(S3ImgPathPrefix pathPrefix, String imgName) {
         if (Objects.isNull(imgName)) {
             return null;

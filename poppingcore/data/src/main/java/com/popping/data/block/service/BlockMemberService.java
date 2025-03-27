@@ -1,8 +1,10 @@
 package com.popping.data.block.service;
 
 import com.popping.data.block.repository.BlockMemberRepository;
+import com.popping.data.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,8 +13,12 @@ import java.util.List;
 public class BlockMemberService {
     private final BlockMemberRepository blockMemberRepository;
 
-    public List<Long> findBlockMembers(Long requesterPk) {
+    public List<Long> findBlockMemberPks(Long requesterPk) {
         return blockMemberRepository.findBlockMemberPks(requesterPk);
+    }
+
+    public List<Member> findBlockMembers(Long requesterPk) {
+        return blockMemberRepository.findBlockMembers(requesterPk);
     }
 
     public void deleteBlockMember(Long fromMemberPk, Long toMemberPk) {
@@ -21,5 +27,10 @@ public class BlockMemberService {
 
     public boolean isExistBlockedHistory(Long fromMemberPk, Long toMemberPk) {
         return blockMemberRepository.existsByFromMember_PkAndToMember_Pk(fromMemberPk, toMemberPk);
+    }
+
+    @Transactional
+    public void deleteAllAssociatedMember(Long memberPk) {
+        blockMemberRepository.deleteAllAssociatedMember(memberPk);
     }
 }

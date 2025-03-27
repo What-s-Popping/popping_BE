@@ -5,6 +5,7 @@ import com.popping.client.aws.s3.S3Service;
 import com.popping.data.member.entity.Member;
 import com.popping.data.member.service.MemberService;
 import com.popping.domain.member.dto.MemberInfoDto;
+import com.popping.domain.member.dto.MemberNameDto;
 import com.popping.domain.member.dto.ProfileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,11 @@ public class ProfileService {
     public void updateProfileName(Long memberPk, ProfileDto.Request request) {
         memberService.findMemberOp(memberPk).orElseThrow(NoSuchElementException::new)
                 .updateName(request.getUpdateName());
+    }
+
+    public MemberNameDto.Response findName(Long memberPk) {
+        return MemberNameDto.Response.builder()
+                .name(memberService.findMemberName(memberPk))
+                .build();
     }
 }

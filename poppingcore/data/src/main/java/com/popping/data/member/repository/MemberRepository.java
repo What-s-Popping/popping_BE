@@ -30,4 +30,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("select m from Member m where m.phoneNumber in :phoneNumbers")
     List<Member> findMembers(@Param("phoneNumbers") List<String> phoneNumbers);
+
+    @Query("select m.name from Member m where m.pk = :memberPk")
+    Optional<String> findMemberName(@Param("memberPk") Long memberPk);
 }

@@ -40,4 +40,11 @@ public abstract class BasePop extends BaseEntity {
     public boolean isWriter(Long writerPk) {
         return this.writer.getPk().equals(writerPk);
     }
+
+    public Long getWriterPk() {
+        return isPrivateProfile ? -1 : this.writer.getPk();
+    }
+    public String getWriterName() {
+        return isPrivateProfile ? "?" : this.writer.getName();
+    }
 }

@@ -1,10 +1,11 @@
 package com.popping.data.pop.repository;
 
-import com.popping.data.pop.entity.PopActionState;
 import com.popping.data.pop.entity.RePopActionState;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,4 +41,9 @@ public interface RePopActionStateRepository extends JpaRepository<RePopActionSta
             "join fetch r.member " +
             "where r.rePop.pk = :rePopPk")
     List<RePopActionState> findActions(@Param("rePopPk") Long rePopPk);
+
+    @Modifying
+    @Transactional
+    @Query("delete from RePopActionState rpas where rpas.member.pk = :memberPk or rpas.rePop.writer.pk = :memberPk")
+    void deleteAllAssociatedMember(@Param("memberPk") Long memberPk);
 }

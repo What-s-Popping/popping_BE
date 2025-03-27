@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -51,9 +52,8 @@ public class PopService {
                 .orElseThrow(() -> new EntityNotFoundException(ExceptionMessage.POP_NOT_FOUND.getMessage()));
     }
 
-    public List<Member> findNotExpiredFriends(Optional<Long> lastFriendPk, Long requesterPk, List<Long> blockedMemberPks) {
-        PageRequest pageRequest = PageRequest.ofSize(15);
-        return popRepository.findNotExpiredPopFriends(lastFriendPk.orElse(null), requesterPk, blockedMemberPks, pageRequest);
+    public List<Member> findNotExpiredFriends(Long requesterPk, List<Long> blockedMemberPks) {
+        return popRepository.findNotExpiredPopFriends(requesterPk, blockedMemberPks);
     }
 
     public List<Pop> findNotExpiredPops(List<Long> reportPopPks, List<Member> friends) {
@@ -68,5 +68,14 @@ public class PopService {
 
     public List<Pop> findAllMyPop(long memberId) {
         return popRepository.findAllMyPop(memberId);
+    }
+
+    public List<Long> findAllSharedGroups(Long memberPk) {
+        return popRepository.findAllSharedGroupPks(memberPk);
+    }
+
+    @Transactional
+    public void deletePops(Long memberPk) {
+        popRepository.deletePops(memberPk);
     }
 }

@@ -25,6 +25,11 @@ public interface FriendGroupMemberRepository extends JpaRepository<FriendGroupMe
     @Query("select f.member from FriendGroupMember f inner join f.member where f.friendGroup = :friendGroup")
     List<Member> findFriendGroupMembers(@Param("friendGroup") FriendGroup friendGroup);
 
+    @Modifying
+    @Transactional
+    @Query("delete from FriendGroupMember f where f.member.pk = :memberPk or f.friendGroup.pk = :friendGroupPk")
+    void deleteAllAssociatedMember(@Param("memberPk") Long memberPk, @Param("friendGroupPk") Long friendGroupPk);
+
     @Transactional
     @Modifying
     @Query("delete from FriendGroupMember f where f.friendGroup = :friendGroup and f.member.pk = :requesterPk")

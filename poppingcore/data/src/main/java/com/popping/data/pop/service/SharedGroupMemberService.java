@@ -4,6 +4,7 @@ import com.popping.data.pop.entity.SharedGroupMember;
 import com.popping.data.pop.repository.SharedGroupMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +18,11 @@ public class SharedGroupMemberService {
 
     public void saveSharedGroupMembers(List<SharedGroupMember> sharedGroupMembers) {
         sharedGroupMemberRepository.saveAll(sharedGroupMembers);
+    }
+
+    @Transactional
+    public void deleteAllAssociatedMember(Long memberPk, List<Long> sharedGroupPks) {
+        sharedGroupMemberRepository.deleteAllAssociatedMember(memberPk, sharedGroupPks);
     }
 
     public void deleteSharedGroupMember(List<Long> memberAllSharedGroupPk, long requesterPk) {

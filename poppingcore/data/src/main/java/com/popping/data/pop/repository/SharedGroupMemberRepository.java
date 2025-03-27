@@ -10,6 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface SharedGroupMemberRepository extends JpaRepository<SharedGroupMember, Long> {
+    @Modifying
+    @Transactional
+    @Query("delete from SharedGroupMember s where s.member.pk = :memberPk or s.sharedGroup.pk in :sharedGroupPks")
+    void deleteAllAssociatedMember(@Param("memberPk") Long memberPk, @Param("sharedGroupPks") List<Long> sharedGroupPks);
 
     @Transactional
     @Modifying

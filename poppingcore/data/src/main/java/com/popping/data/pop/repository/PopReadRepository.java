@@ -18,6 +18,11 @@ public interface PopReadRepository extends JpaRepository<PopRead, Long> {
     List<Long> findReadPopPks(@Param("pops") List<Pop> pops, @Param("readerPk") Long readerPk);
     boolean existsByPopAndReader(Pop pop, Member reader);
 
+    @Modifying
+    @Transactional
+    @Query("delete from PopRead pr where pr.reader.pk = :memberPk or pr.pop.writer.pk = :memberPk")
+    void deleteAllAssociatedMember(@Param("memberPk") Long memberPk);
+
     @Transactional
     @Modifying
     @Query("delete from PopRead rp where rp.pop.writer.pk = :writerPk and rp.reader.pk = :readerPk")
