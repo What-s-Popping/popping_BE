@@ -38,6 +38,10 @@ public class PopActionStateService {
         return popActionStateRepository.findActions(popPk);
     }
 
+    public void deletePopActionState(long popWriter, long actionWriter) {
+        popActionStateRepository.deletePopActionState(popWriter, actionWriter);
+    }
+
     @Transactional
     public void deleteAllAssociatedMember(Long memberPk) {
         popActionStateRepository.deleteAllAssociatedMember(memberPk);

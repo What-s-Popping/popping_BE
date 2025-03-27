@@ -66,6 +66,10 @@ public class PopService {
         return popRepository.findTodayLastPrivateProfilePopDate(memberPk, startDate, endDate);
     }
 
+    public List<Pop> findAllMyPop(long memberId) {
+        return popRepository.findAllMyPop(memberId);
+    }
+
     public List<Long> findAllSharedGroups(Long memberPk) {
         return popRepository.findAllSharedGroupPks(memberPk);
     }

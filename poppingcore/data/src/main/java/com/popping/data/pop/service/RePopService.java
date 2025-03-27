@@ -39,4 +39,12 @@ public class RePopService {
     public void deleteAllAssociatedMember(Long memberPk) {
         rePopRepository.deleteAllAssociatedMember(memberPk);
     }
+
+    public List<RePop> findRePops(Long targetMemberPk, Long writerPk) {
+        return rePopRepository.findRePops(targetMemberPk, writerPk);
+    }
+
+    public void deleteRePops(List<RePop> rePops) {
+        rePopRepository.deleteAllInBatch(rePops);
+    }
 }

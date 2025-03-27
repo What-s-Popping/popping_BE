@@ -24,4 +24,8 @@ public class SharedGroupMemberService {
     public void deleteAllAssociatedMember(Long memberPk, List<Long> sharedGroupPks) {
         sharedGroupMemberRepository.deleteAllAssociatedMember(memberPk, sharedGroupPks);
     }
+
+    public void deleteSharedGroupMember(List<Long> memberAllSharedGroupPk, long requesterPk) {
+        sharedGroupMemberRepository.deleteSharedGroupMember(memberAllSharedGroupPk, requesterPk);
+    }
 }

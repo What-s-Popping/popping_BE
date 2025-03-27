@@ -14,4 +14,9 @@ public interface SharedGroupMemberRepository extends JpaRepository<SharedGroupMe
     @Transactional
     @Query("delete from SharedGroupMember s where s.member.pk = :memberPk or s.sharedGroup.pk in :sharedGroupPks")
     void deleteAllAssociatedMember(@Param("memberPk") Long memberPk, @Param("sharedGroupPks") List<Long> sharedGroupPks);
+
+    @Transactional
+    @Modifying
+    @Query("delete from SharedGroupMember s where s.sharedGroup in :memberAllSharedGroupPk and s.member.pk = :requesterPk")
+    void deleteSharedGroupMember(@Param("memberAllSharedGroupPk") List<Long> memberAllSharedGroupPk, @Param("requesterPk") long requesterPk);
 }

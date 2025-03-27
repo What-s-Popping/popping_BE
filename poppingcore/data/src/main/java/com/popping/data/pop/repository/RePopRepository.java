@@ -29,5 +29,8 @@ public interface RePopRepository extends JpaRepository<RePop,Long> {
     @Transactional
     @Query("delete from RePop rp where rp.writer.pk = :memberPk or rp.targetMember.pk = :memberPk")
     void deleteAllAssociatedMember(@Param("memberPk") Long memberPk);
+
+    @Query("select rp from RePop rp where rp.targetMember.pk = :targetMemberPk and rp.writer.pk = :writerPk")
+    List<RePop> findRePops(@Param("targetMemberPk") Long targetMemberPk, @Param("writerPk") Long writerPk);
 }
 

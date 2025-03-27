@@ -28,6 +28,6 @@ public interface FriendRequestRepository extends JpaRepository<FriendRequest, Lo
 
     @Modifying
     @Transactional
-    @Query("delete from FriendRequest f where f.toMember.pk = :toMemberPk or f.fromMember.pk = :fromMemberPk")
+    @Query("delete from FriendRequest f where f.toMember.pk = :memberPk or f.fromMember.pk = :memberPk")
     void deleteAllAssociatedMember(@Param("memberPk") Long memberPk);
 }

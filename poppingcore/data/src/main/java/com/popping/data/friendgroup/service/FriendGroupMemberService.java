@@ -54,4 +54,8 @@ public class FriendGroupMemberService {
     public void deleteAllAssociatedMember(Long memberPk, Long friendGroupPk) {
         friendGroupMemberRepository.deleteAllAssociatedMember(memberPk, friendGroupPk);
     }
+
+    public void deleteFriendGroupMember(FriendGroup friendGroup, long requesterPk) {
+        friendGroupMemberRepository.deleteFriendGroupMember(friendGroup, requesterPk);
+    }
 }

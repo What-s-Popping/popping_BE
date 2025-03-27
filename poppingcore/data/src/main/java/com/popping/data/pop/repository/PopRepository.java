@@ -74,5 +74,8 @@ public interface PopRepository extends JpaRepository<Pop,Long> {
     @Transactional
     @Query("delete from Pop p where p.writer.pk = :memberPk")
     void deletePops(@Param("memberPk") Long memberPk);
+
+    @Query("select p from Pop p where p.writer.pk = :memberId")
+    List<Pop> findAllMyPop(@Param("memberId") long memberId);
 }
 

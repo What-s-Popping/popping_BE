@@ -37,4 +37,8 @@ public class PopReadService {
         popReadRepository.deleteAllAssociatedMember(memberPk);
     }
 
+
+    public void deleteReadPopsHistory(long writerPk, long readerPk) {
+        popReadRepository.deleteReadPopsHistory(writerPk, readerPk);
+    }
 }
