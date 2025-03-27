@@ -1,10 +1,10 @@
 package com.popping.data.pop.service;
 
-import com.popping.data.pop.entity.PopActionState;
 import com.popping.data.pop.entity.RePopActionState;
 import com.popping.data.pop.repository.RePopActionStateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,5 +36,10 @@ public class RePopActionStateService {
 
     public List<RePopActionState> findActions(Long popPk) {
         return rePopActionStateRepository.findActions(popPk);
+    }
+
+    @Transactional
+    public void deleteAllAssociatedMember(Long memberPk) {
+        rePopActionStateRepository.deleteAllAssociatedMember(memberPk);
     }
 }

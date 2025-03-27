@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,4 +21,9 @@ public interface BlockMemberRepository extends JpaRepository<BlockMember, Long> 
     @Query("delete from BlockMember bm " +
             "where bm.toMember.pk = :toMemberPk and bm.fromMember.pk = :fromMemberPk")
     void deleteBlockMember(@Param("toMemberPk") Long toMemberPk, @Param("fromMemberPk") Long fromMemberPk);
+
+    @Modifying
+    @Transactional
+    @Query("delete from BlockMember bm where bm.fromMember.pk = :memberPk or bm.toMember.pk = :memberPk")
+    void deleteAllAssociatedMember(@Param("memberPk") Long memberPk);
 }

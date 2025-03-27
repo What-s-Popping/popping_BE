@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -63,5 +64,14 @@ public class PopService {
         LocalDateTime startDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0, 0));
         LocalDateTime endDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(23, 59, 59));
         return popRepository.findTodayLastPrivateProfilePopDate(memberPk, startDate, endDate);
+    }
+
+    public List<Long> findAllSharedGroups(Long memberPk) {
+        return popRepository.findAllSharedGroupPks(memberPk);
+    }
+
+    @Transactional
+    public void deletePops(Long memberPk) {
+        popRepository.deletePops(memberPk);
     }
 }

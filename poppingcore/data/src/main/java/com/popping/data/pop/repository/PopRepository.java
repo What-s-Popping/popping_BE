@@ -5,8 +5,10 @@ import com.popping.data.pop.entity.Pop;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -64,5 +66,13 @@ public interface PopRepository extends JpaRepository<Pop,Long> {
             "order by p.pk desc")
     List<Pop> findNotExpiredFriendPopPks(@Param("reportPopPks") List<Long> reportPopPks,
                                          @Param("friends") List<Member> friends);
+
+    @Query("select p.sharedGroup.pk from Pop p where p.writer.pk = :memberPk")
+    List<Long> findAllSharedGroupPks(@Param("memberPk") Long memberPk);
+
+    @Modifying
+    @Transactional
+    @Query("delete from Pop p where p.writer.pk = :memberPk")
+    void deletePops(@Param("memberPk") Long memberPk);
 }
 

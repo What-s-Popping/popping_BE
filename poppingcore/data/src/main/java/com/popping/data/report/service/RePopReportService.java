@@ -4,6 +4,7 @@ import com.popping.data.report.entity.RePopReport;
 import com.popping.data.report.repository.RePopReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,5 +23,10 @@ public class RePopReportService {
 
     public List<Long> findNotExpiredReportRePopPks(Long requesterPk) {
         return rePopreportRepository.findNotExpiredReportRePopPks(requesterPk);
+    }
+
+    @Transactional
+    public void deleteAllAssociatedMember(Long memberPk) {
+        rePopreportRepository.deleteAllAssociatedMember(memberPk);
     }
 }

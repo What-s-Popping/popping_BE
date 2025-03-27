@@ -112,4 +112,9 @@ public class FriendRequestService {
         String profileImgUrl = s3Service.generateGetPresignedUrl(S3ImgPathPrefix.PROFILE, shared.getSharedMember().getProfileImgFileName());
         return FriendRequestDto.of(shared, profileImgUrl);
     }
+
+    @Transactional
+    public void deleteAllAssociatedMember(Long memberPk) {
+        friendRequestRepository.deleteAllAssociatedMember(memberPk);
+    }
 }

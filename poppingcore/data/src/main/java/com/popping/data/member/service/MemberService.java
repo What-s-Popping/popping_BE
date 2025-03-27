@@ -70,4 +70,9 @@ public class MemberService {
         return memberRepository.findMemberName(memberPk)
                 .orElseThrow(() -> new EntityNotFoundException(ExceptionMessage.MEMBER_NOT_FOUND.getMessage()));
     }
+
+    @Transactional
+    public void deleteMember(Long memberPk) {
+        memberRepository.deleteById(memberPk);
+    }
 }

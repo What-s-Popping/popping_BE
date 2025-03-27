@@ -6,6 +6,7 @@ import com.popping.data.share.entity.SharedType;
 import com.popping.data.share.repository.SharedRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -24,5 +25,10 @@ public class SharedService {
 
     public void saveShared(Shared shared) {
         sharedRepository.save(shared);
+    }
+
+    @Transactional
+    public void deleteAllShared(Long memberPk) {
+        sharedRepository.deleteAllShared(memberPk);
     }
 }

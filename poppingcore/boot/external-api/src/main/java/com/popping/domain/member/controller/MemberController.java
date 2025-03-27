@@ -3,10 +3,7 @@ package com.popping.domain.member.controller;
 import com.popping.domain.member.dto.PopcornDto;
 import com.popping.domain.member.dto.PrivateProfile;
 import com.popping.domain.member.dto.ProfileDto;
-import com.popping.domain.member.service.MyPopService;
-import com.popping.domain.member.service.PopcornService;
-import com.popping.domain.member.service.PrivateProfileService;
-import com.popping.domain.member.service.ProfileService;
+import com.popping.domain.member.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +21,7 @@ public class MemberController {
     private final PrivateProfileService privateProfileService;
     private final ProfileService profileService;
     private final MyPopService myPopService;
+    private final WithdrawMemberService withdrawMemberService;
 
     @GetMapping("/popcorn/balance")
     public ResponseEntity<PopcornDto.Response> getPopcornBalance(@AuthenticationPrincipal UserDetails userDetails) {
@@ -80,5 +78,11 @@ public class MemberController {
         return ResponseEntity.ok(
                 profileService.findName(Long.valueOf(userDetails.getUsername()))
         );
+    }
+
+    @DeleteMapping("/members")
+    public ResponseEntity<Void> withdrawMember(@AuthenticationPrincipal UserDetails userDetails) {
+        withdrawMemberService.withdrawMember(Long.valueOf(userDetails.getUsername()));
+        return ResponseEntity.noContent().build();
     }
 }

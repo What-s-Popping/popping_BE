@@ -6,6 +6,7 @@ import com.popping.data.member.entity.Member;
 import com.popping.data.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,5 +31,10 @@ public class FriendContactService {
     public List<Member> findFriends(Long requesterPk) {
         List<Long> friendsPk = friendContactRepository.findFriends(requesterPk);
         return memberService.findMembers(friendsPk);
+    }
+
+    @Transactional
+    public void deleteAllAssociatedMember(Long memberPk) {
+        friendContactRepository.deleteAllAssociatedMember(memberPk);
     }
 }
