@@ -6,12 +6,15 @@ import com.popping.domain.friend.dto.FriendRequestDto;
 import com.popping.domain.friend.dto.FriendsRequestToMemberDto;
 import com.popping.domain.friend.service.FindFriendService;
 import com.popping.domain.friend.service.FriendRequestService;
+import com.popping.domain.pop.dto.FriendDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -32,9 +35,14 @@ public class FriendController {
     }
 
     @GetMapping("/pops")
-    public ResponseEntity<?> getNotExpiredPopFriends(@RequestParam Optional<Long> lastFriendId,
-                                                     @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(findFriendService.findNotExpiredPopFriends(lastFriendId, Long.valueOf(userDetails.getUsername())));
+    public ResponseEntity<?> getNotExpiredPopFriends(@AuthenticationPrincipal UserDetails userDetails) {
+        Map<Long, FriendDto.Response> response = findFriendService.findNotExpiredPopFriends(Long.valueOf(userDetails.getUsername()));
+
+        if (response.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/requests")

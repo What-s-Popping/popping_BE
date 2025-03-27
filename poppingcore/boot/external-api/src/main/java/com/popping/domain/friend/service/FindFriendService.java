@@ -18,8 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -45,36 +44,31 @@ public class FindFriendService {
                 .build();
     }
 
-    public List<FriendDto.Response> findNotExpiredPopFriends(Optional<Long> lastFriendPk, Long requesterPk) {
+    public Map<Long, FriendDto.Response> findNotExpiredPopFriends(Long requesterPk) {
         List<Long> blockedMemberPks = blockMemberService.findBlockMemberPks(requesterPk);
-        List<Member> friends = popService.findNotExpiredFriends(lastFriendPk, requesterPk, blockedMemberPks);
+        List<Member> friends = popService.findNotExpiredFriends(requesterPk, blockedMemberPks);
 
         List<Long> reportPopPks = popReportService.findNotExpiredReportPopPks(requesterPk, friends);
         List<Pop> pops = popService.findNotExpiredPops(reportPopPks, friends);
-        List<Long> popReads = popReadService.findReadPopPks(pops, requesterPk);
+        List<Long> popReadPks = popReadService.findReadPopPks(pops, requesterPk);
 
-        return friends.stream()
-                .map(friend -> FriendDto.Response.builder()
-                        .id(friend.getPk())
-                        .nickname(friend.getName())
-                        .profileImgUrl(findImgService.generateProfileImgDownloadUrl(friend.getProfileImgFileName()))
-                        .friendPopIds(extractFriendPopIds(friend.getPk(), pops))
-                        .isRead(isRead(friend.getPk(), pops, popReads))
-                        .build()
-                )
-                .toList();
+        Map<Long, FriendDto.Response> responseDto = new TreeMap<>();
+
+        for (Pop pop : pops) {
+            responseDto.computeIfAbsent(pop.getWriterPk(), k -> FriendDto.Response.builder()
+                            .nickname(pop.getWriterName())
+                            .profileImgUrl(findImgService.generateProfileImgDownloadUrl(pop.getWriter().getProfileImgFileName(), pop.isPrivateProfile()))
+                            .build())
+                    .getFriendPops().add(FriendDto.FriendPop.builder()
+                            .popId(pop.getPk())
+                            .isRead(isRead(pop.getPk(), popReadPks))
+                            .build());
+        }
+
+        return responseDto;
     }
 
-    private static List<Long> extractFriendPopIds(Long writerPk, List<Pop> pops) {
-        return pops.stream()
-                .filter(pop -> pop.isWriter(writerPk))
-                .map(Pop::getPk)
-                .toList();
-    }
-
-    private boolean isRead(Long writerPk, List<Pop> pops, List<Long> readPops) {
-        return pops.stream()
-                .filter(pop -> pop.isWriter(writerPk))
-                .allMatch(pop -> readPops.contains(pop.getPk()));
+    private static boolean isRead(Long popPk, List<Long> readPops) {
+        return readPops.contains(popPk);
     }
 }

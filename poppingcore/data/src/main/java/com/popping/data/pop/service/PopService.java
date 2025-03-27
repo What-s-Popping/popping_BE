@@ -51,9 +51,8 @@ public class PopService {
                 .orElseThrow(() -> new EntityNotFoundException(ExceptionMessage.POP_NOT_FOUND.getMessage()));
     }
 
-    public List<Member> findNotExpiredFriends(Optional<Long> lastFriendPk, Long requesterPk, List<Long> blockedMemberPks) {
-        PageRequest pageRequest = PageRequest.ofSize(15);
-        return popRepository.findNotExpiredPopFriends(lastFriendPk.orElse(null), requesterPk, blockedMemberPks, pageRequest);
+    public List<Member> findNotExpiredFriends(Long requesterPk, List<Long> blockedMemberPks) {
+        return popRepository.findNotExpiredPopFriends(requesterPk, blockedMemberPks);
     }
 
     public List<Pop> findNotExpiredPops(List<Long> reportPopPks, List<Member> friends) {
