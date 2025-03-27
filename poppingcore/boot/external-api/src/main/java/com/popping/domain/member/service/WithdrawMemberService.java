@@ -1,6 +1,7 @@
 package com.popping.domain.member.service;
 
 import com.popping.data.block.service.BlockMemberService;
+import com.popping.data.friendgroup.service.CustomFriendGroupMemberService;
 import com.popping.data.friendgroup.service.FriendContactService;
 import com.popping.data.friendgroup.service.FriendGroupMemberService;
 import com.popping.data.img.service.ImgService;
@@ -36,6 +37,7 @@ public class WithdrawMemberService {
     private final PopService popService;
     private final PopActionStateService popActionStateService;
     private final ImgService imgService;
+    private final CustomFriendGroupMemberService customFriendGroupMemberService;
 
     @Transactional
     public void withdrawMember(Long memberPk) {
@@ -58,6 +60,7 @@ public class WithdrawMemberService {
         friendGroupMemberService.deleteAllAssociatedMember(memberPk, member.getAllFriendGroup().getPk());
         List<Long> popSharedGroupPks = popService.findAllSharedGroups(memberPk);
         sharedGroupMemberService.deleteAllAssociatedMember(memberPk, popSharedGroupPks);
+        customFriendGroupMemberService.deleteAllAssociatedMember(memberPk);
         popService.deletePops(memberPk);
 
         blockMemberService.deleteAllAssociatedMember(memberPk);

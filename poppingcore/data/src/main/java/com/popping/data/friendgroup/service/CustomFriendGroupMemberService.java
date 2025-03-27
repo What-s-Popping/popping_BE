@@ -53,4 +53,9 @@ public class CustomFriendGroupMemberService {
     public void deleteCustomFriendGroupMember(List<CustomFriendGroup> memberCustomFriendGroup, long requesterPk) {
         customFriendGroupMemberRepository.deleteCustomFriendGroupMember(memberCustomFriendGroup, requesterPk);
     }
+
+    @Transactional
+    public void deleteAllAssociatedMember(Long memberPk) {
+        customFriendGroupMemberRepository.deleteAllAssociatedMember(memberPk);
+    }
 }

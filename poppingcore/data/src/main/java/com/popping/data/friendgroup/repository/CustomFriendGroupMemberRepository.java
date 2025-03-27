@@ -27,4 +27,9 @@ public interface CustomFriendGroupMemberRepository extends JpaRepository<CustomF
     @Modifying
     @Query("delete from CustomFriendGroupMember c where c.customFriendGroup in :memberCustomFriendGroup and c.member.pk = :requesterPk")
     void deleteCustomFriendGroupMember(@Param("memberCustomFriendGroup") List<CustomFriendGroup> memberCustomFriendGroup, @Param("requesterPk") long requesterPk);
+
+    @Modifying
+    @Transactional
+    @Query("delete from CustomFriendGroupMember c where c.member.pk = :memberPk or c.customFriendGroup.groupOwner.pk = :memberPk")
+    void deleteAllAssociatedMember(@Param("memberPk") Long memberPk);
 }
