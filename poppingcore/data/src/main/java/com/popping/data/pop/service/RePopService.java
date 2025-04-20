@@ -1,10 +1,12 @@
 package com.popping.data.pop.service;
 
+import com.popping.data.pop.entity.Pop;
 import com.popping.data.pop.entity.RePop;
 import com.popping.data.pop.repository.RePopRepository;
 import com.popping.global.exceptionmessage.ExceptionMessage;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,5 +48,9 @@ public class RePopService {
 
     public void deleteRePops(List<RePop> rePops) {
         rePopRepository.deleteAllInBatch(rePops);
+    }
+
+    public Optional<RePop> findRecentWidgetRePop(Long memberPk) {
+        return rePopRepository.findRecentWidgetRePop(memberPk, Limit.of(1));
     }
 }

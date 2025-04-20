@@ -17,8 +17,8 @@ public class RePop extends BasePop {
     private Member targetMember;
 
     @Builder
-    public RePop(String chip, ColorChip colorChip, String contents, String imgName, boolean isPrivateProfile, Member writer, Member targetMember) {
-        super(chip, colorChip, contents, imgName, isPrivateProfile, writer);
+    public RePop(String chip, ColorChip colorChip, String contents, String imgName, boolean isPrivateProfile, Member writer, Member targetMember, boolean isWidgetAllow) {
+        super(chip, colorChip, contents, imgName, isPrivateProfile, writer, isWidgetAllow);
         this.targetMember = targetMember;
     }
 }

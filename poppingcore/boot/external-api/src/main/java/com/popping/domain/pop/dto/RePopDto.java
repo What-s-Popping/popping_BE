@@ -14,6 +14,8 @@ public class RePopDto {
     public static class Request {
         @JsonProperty(value = "isPrivateProfile")
         private boolean isPrivateProfile;
+        @JsonProperty(value = "isWidgetAllow")
+        private boolean isWidgetAllow;
         @NotBlank
         private String chip;
         @NotBlank
@@ -31,6 +33,7 @@ public class RePopDto {
         public RePop of(Member writer, Member targetMember) {
             return RePop.builder()
                     .isPrivateProfile(isPrivateProfile)
+                    .isWidgetAllow(isWidgetAllow)
                     .chip(chip)
                     .colorChip(colorChip)
                     .writer(writer)

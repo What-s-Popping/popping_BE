@@ -1,6 +1,8 @@
 package com.popping.data.pop.repository;
 
+import com.popping.data.pop.entity.Pop;
 import com.popping.data.pop.entity.RePop;
+import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RePopRepository extends JpaRepository<RePop,Long> {
     @Query("select rp from RePop rp " +
@@ -32,5 +35,12 @@ public interface RePopRepository extends JpaRepository<RePop,Long> {
 
     @Query("select rp from RePop rp where rp.targetMember.pk = :targetMemberPk and rp.writer.pk = :writerPk")
     List<RePop> findRePops(@Param("targetMemberPk") Long targetMemberPk, @Param("writerPk") Long writerPk);
+
+    @Query("select rp from RePop rp " +
+            "where rp.targetMember.pk = :requesterPk " +
+                "and rp.isWidgetAllow = true " +
+//                "and rp.createdAt > (current_timestamp - 1 day) " + // todo 실제 배포때는 주석 해제
+            "order by rp.pk desc")
+    Optional<RePop> findRecentWidgetRePop(@Param("requesterPk") Long requesterPk, Limit limit);
 }
 
