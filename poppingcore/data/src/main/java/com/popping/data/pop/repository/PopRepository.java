@@ -2,6 +2,7 @@ package com.popping.data.pop.repository;
 
 import com.popping.data.member.entity.Member;
 import com.popping.data.pop.entity.Pop;
+import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface PopRepository extends JpaRepository<Pop,Long> {
     @Query("select p.createdAt from Pop p where p.writer.pk = :memberPk and p.isPrivateProfile = true order by p.pk desc limit 1")
@@ -77,5 +79,14 @@ public interface PopRepository extends JpaRepository<Pop,Long> {
 
     @Query("select p from Pop p where p.writer.pk = :memberId")
     List<Pop> findAllMyPop(@Param("memberId") long memberId);
+
+    @Query("select p from Pop p  " +
+                "left join SharedGroupMember sgm on p.sharedGroup = sgm.sharedGroup " +
+                "left join FriendGroupMember fgm on p.sharedGroup = fgm.friendGroup " +
+            "where (sgm.member.pk = :requesterPk or fgm.member.pk = :requesterPk) " +
+                "and p.isWidgetAllow = true " +
+//                "and p.createdAt > (current_timestamp - 1 day) " + // todo 실제 배포때는 주석 해제
+            "order by p.pk desc")
+    Optional<Pop> findRecentWidgetPop(@Param("requesterPk") Long requesterPk, Limit limit);
 }
 
