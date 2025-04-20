@@ -6,6 +6,7 @@ import com.popping.data.pop.repository.PopRepository;
 import com.popping.global.exceptionmessage.ExceptionMessage;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,5 +78,9 @@ public class PopService {
     @Transactional
     public void deletePops(Long memberPk) {
         popRepository.deletePops(memberPk);
+    }
+
+    public Optional<Pop> findRecentWidgetPop(Long memberPk) {
+        return popRepository.findRecentWidgetPop(memberPk, Limit.of(1));
     }
 }
