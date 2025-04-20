@@ -15,6 +15,8 @@ public abstract class BasePop extends BaseEntity {
     @Column
     private boolean isPrivateProfile;
     @Column
+    private boolean isWidgetAllow;
+    @Column
     private String chip;
     @Column
     @Enumerated(EnumType.STRING)
@@ -28,13 +30,14 @@ public abstract class BasePop extends BaseEntity {
     @JoinColumn(name = "writer", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member writer;
 
-    public BasePop(String chip, ColorChip colorChip, String contents, String imgName, boolean isPrivateProfile, Member writer) {
+    public BasePop(String chip, ColorChip colorChip, String contents, String imgName, boolean isPrivateProfile, Member writer, boolean isWidgetAllow) {
         this.chip = chip;
         this.colorChip = colorChip;
         this.contents = contents;
         this.imgName = imgName;
         this.isPrivateProfile = isPrivateProfile;
         this.writer = writer;
+        this.isWidgetAllow = isWidgetAllow;
     }
 
     public boolean isWriter(Long writerPk) {

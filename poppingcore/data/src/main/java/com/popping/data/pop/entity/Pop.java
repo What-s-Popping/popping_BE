@@ -21,8 +21,8 @@ public class Pop extends BasePop {
     private CommonGroup sharedGroup;
 
     @Builder
-    public Pop(String chip, ColorChip colorChip, String contents, String imgName, boolean isPrivateProfile, Member writer, boolean isGlobalShared, CommonGroup sharedGroup) {
-        super(chip, colorChip, contents, imgName, isPrivateProfile, writer);
+    public Pop(String chip, ColorChip colorChip, String contents, String imgName, boolean isPrivateProfile, Member writer, boolean isGlobalShared, CommonGroup sharedGroup, boolean isWidgetAllow) {
+        super(chip, colorChip, contents, imgName, isPrivateProfile, writer, isWidgetAllow);
         this.isGlobalShared = isGlobalShared;
         this.sharedGroup = sharedGroup;
     }

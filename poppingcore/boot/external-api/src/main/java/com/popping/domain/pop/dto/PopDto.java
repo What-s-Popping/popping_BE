@@ -15,6 +15,8 @@ public class PopDto {
         private boolean isPrivateProfile;
         @JsonProperty(value = "isGlobalShare")
         private boolean isGlobalShare;
+        @JsonProperty(value = "isWidgetAllow")
+        private boolean isWidgetAllow;
         private String chip;
         private ColorChip colorChip;
         private List<Long> targetMemberList;
